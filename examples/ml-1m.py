@@ -3,14 +3,16 @@ from pathlib import Path
 
 
 def main():
-    dataset_path = Path(option.dataset_path)
-    df = pd.read_csv(dataset_path / 'ratings.dat', sep='::', engine='python')
-
+    dataset_path = Path(args.dataset_path)
+    df = pd.read_csv(dataset_path / 'ratings.dat', sep='::', engine='python', header=None)
+    df.loc[df[2] <= 3, 2] = 0
+    df.loc[df[2] > 3, 2] = 1
+    print(df)
 
 
 if __name__ == '__main__':
-    from optparse import OptionParser
-    parser = OptionParser()
-    parser.add_option('--dataset_path', dest='dataset_path')
-    option, args = parser.parse_args()
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('--dataset_path')
+    args = parser.parse_args()
     main()
