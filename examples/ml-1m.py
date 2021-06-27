@@ -37,13 +37,21 @@ def main():
     # construct the dataset
     labels = df.pop('ctr')
     dataset = tf.data.Dataset.from_tensor_slices((dict(df), labels))
-    dataset.shuffle(buffer_size=200, seed=42).batch(64)
+    dataset = dataset.shuffle(buffer_size=200, seed=42).batch(64)
     train_dataset, validation_dataset, test_dataset = train_validation_test_split(
         dataset, len(df), train_size, validation_size
     )
 
     # train the model
-    model = FM()
+    model = FM(
+        one_hot_feature_columns,
+        multi_hot_feature_columns,
+        dense_feature_columns,
+        use_dense_feature_columns=False,
+    )
+    for features, labels in train_dataset:
+        print(model(features))
+        break
 
 
 if __name__ == '__main__':
