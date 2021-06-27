@@ -1,5 +1,6 @@
 import tensorflow as tf
-import pyrec.layers as my_layer
+
+import pyrec.layers as my_layers
 
 
 class FM(tf.keras.models.Model):
@@ -12,4 +13,4 @@ class FM(tf.keras.models.Model):
         pass
 
     def call(self, inputs, training=None, mask=None):
-        return my_layer.FM(inputs)
+        return my_layers.SimplifiedFM(inputs)
