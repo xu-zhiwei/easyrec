@@ -14,6 +14,8 @@ class FM(tf.keras.models.Model):
                  one_hot_feature_columns,
                  multi_hot_feature_columns,
                  dense_feature_columns,
+                 one_hot_shape,
+                 multi_hot_shape,
                  k=16,
                  use_dense_feature_columns=False,
                  ):
@@ -30,7 +32,7 @@ class FM(tf.keras.models.Model):
         if self.use_dense_feature_columns:
             self.dense_input_layer = DenseFeatures(feature_columns=dense_feature_columns)
             self.fc = Dense(units=1)
-        self.fm = my_layers.FM(k=k)
+        self.fm = my_layers.FM(input_dimension=one_hot_shape + multi_hot_shape, k=k)
 
     def call(self, inputs, training=None, mask=None):
         fm_inputs = self.fm_input_layer(inputs)
