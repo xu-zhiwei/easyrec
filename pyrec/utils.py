@@ -1,6 +1,7 @@
 from typing import Tuple
 
 import tensorflow as tf
+from tensorflow.python.feature_column.feature_column_v2 import IndicatorColumn
 
 
 def train_validation_test_split(dataset: tf.data.Dataset,
@@ -18,18 +19,7 @@ def train_validation_test_split(dataset: tf.data.Dataset,
     return train_dataset, validation_dataset, test_dataset
 
 
-def get_input_shape(one_hot_feature_columns,
-                    multi_hot_feature_columns,
-                    dense_feature_columns,
-                    inputs):
-    one_hot_dimension, multi_hot_dimension, dense_dimension = 0, 0, 0
-    if one_hot_feature_columns:
-        one_hot_input_layer = tf.keras.layers.DenseFeatures(feature_columns=one_hot_feature_columns)
-        one_hot_dimension = one_hot_input_layer(inputs).shape[1]
-    if multi_hot_feature_columns:
-        multi_hot_input_layer = tf.keras.layers.DenseFeatures(feature_columns=multi_hot_feature_columns)
-        multi_hot_dimension = multi_hot_input_layer(inputs).shape[1]
-    if dense_feature_columns:
-        dense_feature_input_layer = tf.keras.layers.DenseFeatures(feature_columns=dense_feature_columns)
-        dense_dimension = dense_feature_input_layer(inputs).shape[1]
-    return one_hot_dimension, multi_hot_dimension, dense_dimension
+def get_feature_column_shape(feature_column):
+    if isinstance(feature_column, IndicatorColumn):
+        return feature_column.categorical_column.number_buckets
+
