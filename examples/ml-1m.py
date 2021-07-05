@@ -56,10 +56,8 @@ def main():
     if args.input_ckpt_path:
         model = tf.keras.models.load_model(args.input_ckpt_path)
     else:
-        model = LR(
-            one_hot_feature_columns,
-            multi_hot_feature_columns,
-            dense_feature_columns
+        model = FFM(
+            one_hot_feature_columns
         )
 
     loss_obj = BinaryCrossentropy()

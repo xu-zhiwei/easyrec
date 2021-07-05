@@ -37,37 +37,19 @@ class FFM(tf.keras.layers.Layer):
     Field-aware factorization machine layer.
     """
 
-    def __init__(self, one_hot_feature_columns, multi_hot_feature_columns, k=16):
+    def __init__(self, one_hot_feature_columns, k=4):
         super(FFM, self).__init__()
         one_hot_shape = sum([get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns])
-        multi_hot_shape = sum(
-            [get_feature_column_shape(feature_column) for feature_column in multi_hot_feature_columns])
-        self.field_dims = [*[get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns],
-                           *[get_feature_column_shape(feature_column) for feature_column in multi_hot_feature_columns]]
+        self.field_dims = [get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns]
         self.num_fields = len(self.field_dims)
 
         self.k = k
-        self.w = tf.Variable(tf.random.normal(shape=(one_hot_shape + multi_hot_shape, 1)),
-                             name='w')
-        self.v = tf.Variable(tf.random.normal(shape=(self.num_fields, one_hot_shape + multi_hot_shape, self.k)),
-                             name='v')
+        self.w = tf.Variable(tf.random.normal(shape=(one_hot_shape, 1)), name='w')
+        self.v = tf.Variable(tf.random.normal(shape=(self.num_fields, one_hot_shape, self.k)), name='v')
 
     def call(self, inputs, *args, **kwargs):
         logits = tf.matmul(inputs, self.w)
-
         for i in range(self.num_fields - 1):
             for j in range(1, self.num_fields):
-                ix, jx = [], []
-                #
-                # self.v[j]
-
-                # x = x + x.new_tensor(self.offsets).unsqueeze(0)
-                # xs = [self.embeddings[i](x) for i in range(self.num_fields)]
-                # ix = list()
-                # for i in range(self.num_fields - 1):
-                #     for j in range(i + 1, self.num_fields):
-                #         ix.append(xs[j][:, i] * xs[i][:, j])
-                # ix = torch.stack(ix, dim=1)
-                # return ix
-
-
+                logits += self.v[j, i, :] * self.v[i, j, :]     # still have bugs
+        return logits
