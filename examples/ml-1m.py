@@ -7,7 +7,7 @@ from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.metrics import Mean, AUC
 
 from pyrec.models import FM
-from pyrec.utils import train_validation_test_split, get_feature_column_shape
+from pyrec.utils import train_validation_test_split
 
 
 def main():
@@ -56,18 +56,10 @@ def main():
     if args.input_ckpt_path:
         model = tf.keras.models.load_model(args.input_ckpt_path)
     else:
-        one_hot_shape = sum([get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns])
-        multi_hot_shape = sum(
-            [get_feature_column_shape(feature_column) for feature_column in multi_hot_feature_columns])
-        # dense_shape = sum([get_feature_column_shape(feature_column) for feature_column in dense_feature_columns])
         model = FM(
             one_hot_feature_columns,
             multi_hot_feature_columns,
-            dense_feature_columns,
-            one_hot_shape,
-            multi_hot_shape,
             k=k,
-            use_dense_feature_columns=False,
         )
 
     loss_obj = BinaryCrossentropy()
@@ -109,6 +101,11 @@ def main():
             train_step(features, labels)
         for features, labels in validation_dataset:
             validation_step(features, labels)
+
+        print('epoch: {}, train_loss: {}, train_auc: {}'.format(epoch + 1, train_loss.result().numpy(),
+                                                                train_auc.result().numpy()))
+        print('epoch: {}, validation_loss: {}, validation_auc: {}'.format(epoch + 1, validation_loss.result().numpy(),
+                                                                          validation_auc.result().numpy()))
 
         model.save(output_ckpt_path / str(epoch + 1))
         if best_auc < validation_auc.result().numpy():

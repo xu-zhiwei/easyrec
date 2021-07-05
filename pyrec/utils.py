@@ -22,4 +22,3 @@ def train_validation_test_split(dataset: tf.data.Dataset,
 def get_feature_column_shape(feature_column):
     if isinstance(feature_column, IndicatorColumn):
         return feature_column.categorical_column.number_buckets
-

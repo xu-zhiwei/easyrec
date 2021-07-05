@@ -1,4 +1,5 @@
 import tensorflow as tf
+from pyrec.utils import get_feature_column_shape
 
 
 class FM(tf.keras.layers.Layer):
@@ -6,11 +7,15 @@ class FM(tf.keras.layers.Layer):
     Factorization machine layer using vector w and matrix v.
     """
 
-    def __init__(self, input_dimension, k):
+    def __init__(self, one_hot_feature_columns, multi_hot_feature_columns, k=16):
         super(FM, self).__init__()
+        one_hot_shape = sum([get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns])
+        multi_hot_shape = sum(
+            [get_feature_column_shape(feature_column) for feature_column in multi_hot_feature_columns])
+
         self.k = k
-        self.w = tf.Variable(tf.random.normal(shape=(input_dimension, 1)), name='w')
-        self.v = tf.Variable(tf.random.normal(shape=(input_dimension, self.k)), name='v')
+        self.w = tf.Variable(tf.random.normal(shape=(one_hot_shape + multi_hot_shape, 1)), name='w')
+        self.v = tf.Variable(tf.random.normal(shape=(one_hot_shape + multi_hot_shape, self.k)), name='v')
 
     def call(self, inputs, *args, **kwargs):
         """
