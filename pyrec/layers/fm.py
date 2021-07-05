@@ -7,10 +7,10 @@ class FM(tf.keras.layers.Layer):
     Factorization machine layer using vector w and matrix v.
     """
 
-    def __init__(self, one_hot_feature_columns, multi_hot_feature_columns, k=16):
+    def __init__(self, one_hot_feature_columns, multi_hot_feature_columns=None, k=16):
         super(FM, self).__init__()
         one_hot_shape = sum([get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns])
-        multi_hot_shape = sum(
+        multi_hot_shape = 0 if not one_hot_feature_columns else sum(
             [get_feature_column_shape(feature_column) for feature_column in multi_hot_feature_columns])
 
         self.k = k
