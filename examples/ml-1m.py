@@ -56,7 +56,7 @@ def main():
     if args.input_ckpt_path:
         model = tf.keras.models.load_model(args.input_ckpt_path)
     else:
-        model = FM(
+        model = FFM(
             one_hot_feature_columns,
             multi_hot_feature_columns,
             k=k,
