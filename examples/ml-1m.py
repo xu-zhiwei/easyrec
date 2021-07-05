@@ -3,10 +3,10 @@ from pathlib import Path
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.losses import BinaryCrossentropy
-from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.metrics import Mean, AUC
+from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import FFM
+from pyrec.models import FFM, LR
 from pyrec.utils import train_validation_test_split
 
 
@@ -56,10 +56,10 @@ def main():
     if args.input_ckpt_path:
         model = tf.keras.models.load_model(args.input_ckpt_path)
     else:
-        model = FFM(
+        model = LR(
             one_hot_feature_columns,
             multi_hot_feature_columns,
-            k=k,
+            dense_feature_columns
         )
 
     loss_obj = BinaryCrossentropy()
