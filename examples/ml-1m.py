@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import FFM, LR
+from pyrec.models import LR, FM, FFM
 from pyrec.utils import train_validation_test_split
 
 
@@ -56,7 +56,7 @@ def main():
     if args.input_ckpt_path:
         model = tf.keras.models.load_model(args.input_ckpt_path)
     else:
-        model = FFM(
+        model = FM(
             one_hot_feature_columns
         )
 
@@ -69,7 +69,7 @@ def main():
     validation_auc = AUC(name='validation_auc')
     best_auc = 0
 
-    @tf.function
+    # @tf.function
     def train_step(x, y):
         with tf.GradientTape() as tape:
             predictions = model(x)
@@ -80,7 +80,7 @@ def main():
         train_loss(loss)
         train_auc(y, predictions)
 
-    @tf.function
+    # @tf.function
     def validation_step(x, y):
         predictions = model(x)
         loss = loss_obj(y, predictions)

@@ -1,4 +1,6 @@
 import tensorflow as tf
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.initializers import GlorotUniform
 from pyrec.utils import get_feature_column_shape
 
 
@@ -10,12 +12,14 @@ class FM(tf.keras.layers.Layer):
     def __init__(self, one_hot_feature_columns, multi_hot_feature_columns=None, k=16):
         super(FM, self).__init__()
         one_hot_shape = sum([get_feature_column_shape(feature_column) for feature_column in one_hot_feature_columns])
-        multi_hot_shape = 0 if not one_hot_feature_columns else sum(
+        multi_hot_shape = 0 if not multi_hot_feature_columns else sum(
             [get_feature_column_shape(feature_column) for feature_column in multi_hot_feature_columns])
 
         self.k = k
         self.w = tf.Variable(tf.random.normal(shape=(one_hot_shape + multi_hot_shape, 1)), name='w')
-        self.v = tf.Variable(tf.random.normal(shape=(one_hot_shape + multi_hot_shape, self.k)), name='v')
+        # self.v = tf.Variable(tf.random.normal(shape=(one_hot_shape + multi_hot_shape, self.k)), name='v')
+        self.v = Embedding(input_dim=one_hot_shape + multi_hot_shape, output_dim=self.k,
+                           name='v')
 
     def call(self, inputs, *args, **kwargs):
         """
@@ -25,10 +29,15 @@ class FM(tf.keras.layers.Layer):
         Returns:
             logits
         """
+        # print(inputs)
         logits = tf.squeeze(tf.matmul(inputs, self.w))
-        square_of_sum = tf.square(tf.matmul(inputs, self.v))
-        sum_of_square = tf.matmul(tf.square(inputs), tf.square(self.v))
+        square_of_sum = tf.square(tf.reduce_sum(self.v(inputs), axis=1))
+        sum_of_square = tf.reduce_sum(tf.square(self.v(inputs)), axis=1)
+        print(self.v(inputs))
+        # print(square_of_sum)
+        # print(sum_of_square)
         logits += 0.5 * tf.reduce_sum(square_of_sum - sum_of_square, axis=1)
+        # print(logits)
         return logits
 
 

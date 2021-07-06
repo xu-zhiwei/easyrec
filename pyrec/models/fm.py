@@ -13,7 +13,7 @@ class FM(tf.keras.models.Model):
 
     def __init__(self,
                  one_hot_feature_columns,
-                 multi_hot_feature_columns,
+                 multi_hot_feature_columns=None,
                  k=16,
                  ):
         super(FM, self).__init__()
