@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import LR, FM, FFM
+from pyrec.models import LR, FM, FFM, PNN
 from pyrec.utils import train_validation_test_split
 
 
@@ -55,9 +55,11 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = FM(
+        model = PNN(
             one_hot_feature_columns,
-            k=k
+            multi_hot_feature_columns,
+            use_inner_product=True,
+            use_outer_product=True
         )
         start_epoch = 0
 
