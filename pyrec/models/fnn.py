@@ -33,7 +33,7 @@ class FNN(tf.keras.Model):
         vs = [self.fm.fm.v[i](inputs) for i in range(self.fm.fm.num_fields)]
         vs = tf.transpose(tf.convert_to_tensor(vs), [1, 0, 2])
         vs = tf.concat(vs, axis=1)
-        x = tf.concat((ws, vs), axis=1)
+        x = tf.concat((ws, vs, tf.zeros(shape=(vs.shape[0], 1)) + self.fm.fm.b), axis=1)
         for fc in self.fcs:
             x = fc(x)
         return sigmoid(x)

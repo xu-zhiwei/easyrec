@@ -55,7 +55,7 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = FFM(
+        model = FM(
             one_hot_feature_columns,
             k=k
         )

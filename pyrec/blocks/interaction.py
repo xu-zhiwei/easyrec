@@ -10,6 +10,7 @@ class FM(tf.keras.models.Model):
     def __init__(self, one_hot_feature_columns, k=16):
         super(FM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
+        self.b = tf.Variable(tf.random.normal(shape=(1,)))
         self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
                   for feature_column in one_hot_feature_columns]
         self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
@@ -32,6 +33,8 @@ class FM(tf.keras.models.Model):
         square_of_sum = tf.square(tf.reduce_sum(vs, axis=1))
         sum_of_square = tf.reduce_sum(tf.square(vs), axis=1)
         logits += 0.5 * tf.reduce_sum(square_of_sum - sum_of_square, axis=1)
+
+        logits += self.b
         return logits
 
 
@@ -43,6 +46,7 @@ class FFM(tf.keras.models.Model):
     def __init__(self, one_hot_feature_columns, k=4):
         super(FFM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
+        self.b = tf.Variable(tf.random.normal(shape=(1,)))
         self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
                   for feature_column in one_hot_feature_columns]
         self.vv = [
@@ -62,4 +66,6 @@ class FFM(tf.keras.models.Model):
         for i in range(self.num_fields - 1):
             for j in range(i + 1, self.num_fields):
                 logits += tf.reduce_sum(self.vv[i][j](inputs) * self.vv[j][i](inputs), axis=1)
+
+        logits += self.b
         return logits
