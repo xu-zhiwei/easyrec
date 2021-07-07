@@ -4,7 +4,7 @@ from tensorflow.keras.layers import DenseFeatures
 from pyrec.utils import get_feature_column_shape
 
 
-class FM(tf.keras.Model):
+class FM(tf.keras.models.Model):
     """
     Factorization machine layer using vector w and matrix v.
     """
@@ -37,7 +37,7 @@ class FM(tf.keras.Model):
         return logits
 
 
-class FFM(tf.keras.Model):
+class FFM(tf.keras.models.Model):
     """
     Field-aware factorization machine layer.
     """

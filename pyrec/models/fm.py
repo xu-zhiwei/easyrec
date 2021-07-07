@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.activations import sigmoid
 
-from .. import blocks
+from pyrec import blocks
 
 
 class FM(tf.keras.models.Model):
