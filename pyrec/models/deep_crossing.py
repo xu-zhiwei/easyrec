@@ -30,7 +30,7 @@ class DeepCrossing(tf.keras.models.Model):
         self.embedding = Dense(units=residual_hidden_units[0], activation='relu')
         self.residual_blocks = [ResidualBlock(residual_hidden_units, residual_activation)
                                 for _ in range(num_residual_blocks)]
-        self.fc = Dense(units=1, activation='sigmoid')
+        self.score = Dense(units=1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
         x = [embedding(inputs) for embedding in self.hot_embeddings]
@@ -40,5 +40,4 @@ class DeepCrossing(tf.keras.models.Model):
         x = self.embedding(x)
         for residual_block in self.residual_blocks:
             x = residual_block(x)
-        return self.fc(x)
-
+        return self.score(x)

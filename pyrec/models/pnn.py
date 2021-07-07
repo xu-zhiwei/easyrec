@@ -9,11 +9,12 @@ class PNN(tf.keras.models.Model):
                  embedding_dimension=32,
                  use_inner_product=False,
                  use_outer_product=False,
-                 hidden_units=None
+                 hidden_units=None,
+                 activation='relu'
                  ):
         super(PNN, self).__init__()
         if hidden_units is None:
-            hidden_units = [128, 64, 1]
+            hidden_units = [128, 64]
         self.embeddings = [
             *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
               for feature_column in one_hot_feature_columns],
@@ -23,8 +24,8 @@ class PNN(tf.keras.models.Model):
         self.use_inner_product = use_inner_product
         self.use_outer_product = use_outer_product
         self.flatten = Flatten()
-        self.fcs = [Dense(units, activation='relu' if i < len(hidden_units) - 1 else 'sigmoid')
-                    for i, units in enumerate(hidden_units)]
+        self.fcs = [Dense(units, activation=activation) for i, units in enumerate(hidden_units)]
+        self.score = Dense(1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
         inputs = [embedding(inputs) for embedding in self.embeddings]
@@ -45,7 +46,5 @@ class PNN(tf.keras.models.Model):
 
         for fc in self.fcs:
             z = fc(z)
-
+        z = self.score(z)
         return z
-
-

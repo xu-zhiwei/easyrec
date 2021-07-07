@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import LR, FM, FFM, PNN, DeepCrossing
+from pyrec.models import DeepCrossing
 from pyrec.utils import train_validation_test_split
 
 

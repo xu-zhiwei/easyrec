@@ -1,12 +1,11 @@
 import tensorflow as tf
-from tensorflow.keras.activations import sigmoid
 from tensorflow.keras.layers import Dense, Flatten
 
 from pyrec.models import FM
 
 
 class FNN(tf.keras.Model):
-    def __init__(self, fm: FM, hidden_units=None):
+    def __init__(self, fm: FM, hidden_units=None, activation='tanh'):
         """
         Factorization Machine supported Neural Network (FNN).
 
@@ -15,7 +14,7 @@ class FNN(tf.keras.Model):
         """
         super(FNN, self).__init__()
         if hidden_units is None:
-            hidden_units = [256, 128, 1]
+            hidden_units = [256, 128]
         if hidden_units[-1] != -1:
             raise ValueError('last element of hidden_units should be 1')
 
@@ -24,7 +23,8 @@ class FNN(tf.keras.Model):
             layer.trainable = False
         self.fm.trainable = False
 
-        self.fcs = [Dense(units) for units in hidden_units]
+        self.fcs = [Dense(units, activation=activation) for units in hidden_units]
+        self.score = Dense(1, activation='sigmoid')
         self.flatten = Flatten()
 
     def call(self, inputs, training=None, mask=None):
@@ -37,4 +37,5 @@ class FNN(tf.keras.Model):
         x = tf.concat((ws, vs, tf.zeros(shape=(vs.shape[0], 1)) + self.fm.fm.b), axis=1)
         for fc in self.fcs:
             x = fc(x)
-        return sigmoid(x)
+        x = self.score(x)
+        return x
