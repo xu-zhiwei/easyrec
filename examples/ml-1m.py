@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import LR, FM, FFM, PNN
+from pyrec.models import LR, FM, FFM, PNN, DeepCrossing
 from pyrec.utils import train_validation_test_split
 
 
@@ -31,7 +31,7 @@ def main():
     # hyper-parameter
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
     batch_size = 128
-    learning_rate = 1
+    learning_rate = 1e-2
     k = 16
     epochs = 150
 
@@ -55,11 +55,10 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = PNN(
+        model = DeepCrossing(
             one_hot_feature_columns,
             multi_hot_feature_columns,
-            use_inner_product=True,
-            use_outer_product=True
+            dense_feature_columns,
         )
         start_epoch = 0
 

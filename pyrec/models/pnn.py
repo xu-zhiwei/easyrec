@@ -6,7 +6,7 @@ class PNN(tf.keras.models.Model):
     def __init__(self,
                  one_hot_feature_columns,
                  multi_hot_feature_columns,
-                 k=32,
+                 embedding_dimension=32,
                  use_inner_product=False,
                  use_outer_product=False,
                  hidden_units=None
@@ -15,9 +15,9 @@ class PNN(tf.keras.models.Model):
         if hidden_units is None:
             hidden_units = [128, 64, 1]
         self.embeddings = [
-            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
+            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
               for feature_column in one_hot_feature_columns],
-            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
+            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
               for feature_column in multi_hot_feature_columns]
         ]
         self.use_inner_product = use_inner_product
