@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import FM
+from pyrec.models import FM, FFM
 from pyrec.utils import train_validation_test_split
 
 
@@ -33,7 +33,7 @@ def main():
     batch_size = 128
     learning_rate = 1
     k = 16
-    epochs = 75
+    epochs = 100
 
     # construct the dataset
     labels = df.pop('ctr')
@@ -55,7 +55,7 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = FM(
+        model = FFM(
             one_hot_feature_columns,
             k=k
         )
