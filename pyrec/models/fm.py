@@ -6,7 +6,7 @@ from pyrec import blocks
 
 class FM(tf.keras.models.Model):
     """
-    Factorization Machines
+    Factorization Machines.
 
     """
 

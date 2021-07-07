@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import FM, FFM
+from pyrec.models import LR, FM, FFM
 from pyrec.utils import train_validation_test_split
 
 
@@ -33,7 +33,7 @@ def main():
     batch_size = 128
     learning_rate = 1
     k = 16
-    epochs = 100
+    epochs = 150
 
     # construct the dataset
     labels = df.pop('ctr')

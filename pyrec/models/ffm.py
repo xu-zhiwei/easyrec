@@ -17,3 +17,4 @@ class FFM(tf.keras.models.Model):
     def call(self, inputs, training=None, mask=None):
         logits = self.ffm(inputs)
         return sigmoid(logits)
+
