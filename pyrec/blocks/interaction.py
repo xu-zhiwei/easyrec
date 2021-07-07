@@ -45,8 +45,14 @@ class FFM(tf.keras.models.Model):
         self.num_fields = len(one_hot_feature_columns)
         self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
                   for feature_column in one_hot_feature_columns]
-        self.vv = [[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
-                    for feature_column in one_hot_feature_columns] for _ in range(self.num_fields)]
+        self.vv = [
+            [
+                DenseFeatures(tf.feature_column.embedding_column(one_hot_feature_columns[j], dimension=k))
+                if i != j else None
+                for j in range(self.num_fields)
+            ]
+            for i in range(self.num_fields)
+        ]
 
     def call(self, inputs, *args, **kwargs):
         ws = [self.w[i](inputs) for i in range(self.num_fields)]
@@ -54,6 +60,6 @@ class FFM(tf.keras.models.Model):
         logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
 
         for i in range(self.num_fields - 1):
-            for j in range(1, self.num_fields):
-                pass
+            for j in range(i + 1, self.num_fields):
+                logits += tf.reduce_sum(self.vv[i][j](inputs) * self.vv[j][i](inputs), axis=1)
         return logits
