@@ -51,11 +51,15 @@ def main():
     # initialize the environment for train
     output_ckpt_path = Path(args.output_ckpt_path)
     if args.input_ckpt_path:
+        input_ckpt_path = Path(args.input_ckpt_path)
         model = tf.keras.models.load_model(args.input_ckpt_path)
+        start_epoch = int(input_ckpt_path.name)
     else:
         model = FM(
-            one_hot_feature_columns
+            one_hot_feature_columns,
+            k=k
         )
+        start_epoch = 0
 
     loss_obj = BinaryCrossentropy()
     optimizer = SGD(learning_rate=learning_rate)
@@ -86,7 +90,7 @@ def main():
         validation_auc(y, predictions)
 
     # train
-    for epoch in range(epochs):
+    for epoch in range(start_epoch, epochs):
         train_loss.reset_states()
         train_auc.reset_states()
         validation_loss.reset_states()
