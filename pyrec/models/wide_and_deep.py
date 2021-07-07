@@ -12,5 +12,3 @@ class WideAndDeep(tf.keras.models.Model):
 
     def call(self, inputs, training=None, mask=None):
         pass
-
-

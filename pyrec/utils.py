@@ -1,7 +1,6 @@
 from typing import Tuple
 
 import tensorflow as tf
-from tensorflow.python.feature_column.feature_column_v2 import IndicatorColumn
 
 
 def train_validation_test_split(dataset: tf.data.Dataset,
@@ -17,8 +16,3 @@ def train_validation_test_split(dataset: tf.data.Dataset,
     validation_dataset = test_dataset.take(validation_size)
     test_dataset = test_dataset.skip(validation_size)
     return train_dataset, validation_dataset, test_dataset
-
-
-def get_feature_column_shape(feature_column):
-    if isinstance(feature_column, IndicatorColumn):
-        return feature_column.categorical_column.number_buckets
