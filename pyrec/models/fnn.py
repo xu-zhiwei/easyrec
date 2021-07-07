@@ -18,7 +18,12 @@ class FNN(tf.keras.Model):
             hidden_units = [256, 128, 1]
         if hidden_units[-1] != -1:
             raise ValueError('last element of hidden_units should be 1')
+
         self.fm = fm
+        for layer in self.fm.layers:
+            layer.trainable = False
+        self.fm.trainable = False
+
         self.fcs = [Dense(units) for units in hidden_units]
 
     def call(self, inputs, training=None, mask=None):
