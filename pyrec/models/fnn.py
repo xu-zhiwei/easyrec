@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.activations import sigmoid
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Flatten
 
 from pyrec.models import FM
 
@@ -25,6 +25,7 @@ class FNN(tf.keras.Model):
         self.fm.trainable = False
 
         self.fcs = [Dense(units) for units in hidden_units]
+        self.flatten = Flatten()
 
     def call(self, inputs, training=None, mask=None):
         ws = [self.fm.fm.w[i](inputs) for i in range(self.fm.fm.num_fields)]
@@ -32,7 +33,7 @@ class FNN(tf.keras.Model):
         ws = tf.squeeze(ws)
         vs = [self.fm.fm.v[i](inputs) for i in range(self.fm.fm.num_fields)]
         vs = tf.transpose(tf.convert_to_tensor(vs), [1, 0, 2])
-        vs = tf.concat(vs, axis=1)
+        vs = self.flatten(vs)
         x = tf.concat((ws, vs, tf.zeros(shape=(vs.shape[0], 1)) + self.fm.fm.b), axis=1)
         for fc in self.fcs:
             x = fc(x)
