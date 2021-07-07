@@ -1,6 +1,6 @@
 import tensorflow as tf
-from tensorflow.keras.layers import DenseFeatures, Dense
 from tensorflow.keras.activations import sigmoid
+from tensorflow.keras.layers import DenseFeatures, Dense
 
 
 class LR(tf.keras.Model):

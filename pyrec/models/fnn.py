@@ -1,7 +1,8 @@
 import tensorflow as tf
-import pyrec.layers as my_layers
 from tensorflow.keras.activations import sigmoid
 from tensorflow.keras.layers import Dense
+
+import pyrec.blocks as my_layers
 
 
 class FNN(tf.keras.Model):

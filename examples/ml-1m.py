@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import LR, FM, FFM
+from pyrec.models import FM
 from pyrec.utils import train_validation_test_split
 
 
@@ -21,12 +21,9 @@ def main():
 
     # construct the feature columns
     categorical_column_with_identity = tf.feature_column.categorical_column_with_identity
-    indicator_column = tf.feature_column.indicator_column
     one_hot_feature_columns = [
-        indicator_column(
-            categorical_column_with_identity(key='user_id', num_buckets=df['user_id'].max() + 1, default_value=0)),
-        indicator_column(
-            categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0)),
+        categorical_column_with_identity(key='user_id', num_buckets=df['user_id'].max() + 1, default_value=0),
+        categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0),
     ]
     multi_hot_feature_columns = []
     dense_feature_columns = []
@@ -69,7 +66,7 @@ def main():
     validation_auc = AUC(name='validation_auc')
     best_auc = 0
 
-    # @tf.function
+    @tf.function
     def train_step(x, y):
         with tf.GradientTape() as tape:
             predictions = model(x)
@@ -80,7 +77,7 @@ def main():
         train_loss(loss)
         train_auc(y, predictions)
 
-    # @tf.function
+    @tf.function
     def validation_step(x, y):
         predictions = model(x)
         loss = loss_obj(y, predictions)

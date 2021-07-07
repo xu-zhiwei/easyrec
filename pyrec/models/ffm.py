@@ -1,8 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.activations import sigmoid
-from tensorflow.keras.layers import DenseFeatures, Dense
-
-import pyrec.layers as my_layers
+from tensorflow.keras.layers import DenseFeatures
 
 
 class FFM(tf.keras.models.Model):

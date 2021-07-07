@@ -40,7 +40,7 @@ columns = [name]
 # columns = [tf.feature_column.indicator_column(video_id)]
 # features = {'video_id': tf.sparse.from_dense([[2, 85, 0, 0, 0],
 #                                               [33, 78, 2, 73, 1]])}
-# input_layer = tf.keras.layers.DenseFeatures(columns)
+# input_layer = tf.keras.blocks.DenseFeatures(columns)
 # dense_tensor = input_layer(features)
 # print(dense_tensor)
 
