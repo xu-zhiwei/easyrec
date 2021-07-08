@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Dense, Flatten
+from pyrec import blocks
 
 
 class PNN(tf.keras.models.Model):
@@ -24,7 +25,7 @@ class PNN(tf.keras.models.Model):
         self.use_inner_product = use_inner_product
         self.use_outer_product = use_outer_product
         self.flatten = Flatten()
-        self.fcs = [Dense(units, activation=activation) for i, units in enumerate(hidden_units)]
+        self.dense_block = blocks.DenseBlock(hidden_units, activation)
         self.score = Dense(1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
@@ -44,7 +45,6 @@ class PNN(tf.keras.models.Model):
             outer_p = self.flatten(outer_p)
             z = tf.concat((z, outer_p), axis=1)
 
-        for fc in self.fcs:
-            z = fc(z)
+        z = self.dense_block(z)
         z = self.score(z)
         return z

@@ -12,9 +12,8 @@ class LR(tf.keras.Model):
         super(LR, self).__init__()
         self.input_layer = DenseFeatures(
             feature_columns=one_hot_feature_columns + multi_hot_feature_columns + dense_feature_columns)
-        self.fc = Dense(units=1)
+        self.score = Dense(units=1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
         x = self.input_layer(inputs)
-        logits = self.fc(x)
-        return sigmoid(logits)
+        return self.score(x)

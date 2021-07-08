@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten
 
 from pyrec.models import FM
+from pyrec import blocks
 
 
 class FNN(tf.keras.Model):
@@ -23,7 +24,7 @@ class FNN(tf.keras.Model):
             layer.trainable = False
         self.fm.trainable = False
 
-        self.fcs = [Dense(units, activation=activation) for units in hidden_units]
+        self.dense_block = blocks.DenseBlock(hidden_units, activation)
         self.score = Dense(1, activation='sigmoid')
         self.flatten = Flatten()
 
@@ -35,7 +36,6 @@ class FNN(tf.keras.Model):
         vs = tf.transpose(tf.convert_to_tensor(vs), [1, 0, 2])
         vs = self.flatten(vs)
         x = tf.concat((ws, vs, tf.zeros(shape=(vs.shape[0], 1)) + self.fm.fm.b), axis=1)
-        for fc in self.fcs:
-            x = fc(x)
+        x = self.dense_block(x)
         x = self.score(x)
         return x
