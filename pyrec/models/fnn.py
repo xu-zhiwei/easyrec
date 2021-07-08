@@ -1,8 +1,8 @@
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten
 
-from pyrec.models import FM
 from pyrec import blocks
+from pyrec.models import FM
 
 
 class FNN(tf.keras.Model):
