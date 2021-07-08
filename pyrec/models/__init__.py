@@ -1,4 +1,5 @@
 from .deep_crossing import DeepCrossing
+from .deepfm import DeepFM
 from .ffm import FFM
 from .fm import FM
 from .lr import LR
