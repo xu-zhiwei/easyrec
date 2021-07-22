@@ -20,4 +20,4 @@ class MLP(tf.keras.models.Model):
     def call(self, inputs, training=None, mask=None):
         inputs = self.input_layer(inputs)
         x = self.dense_block(inputs)
-        return self.score(inputs)
+        return self.score(x)

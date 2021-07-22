@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import DSSM
+from pyrec.models import MLP
 from pyrec.utils import train_validation_test_split
 
 
@@ -40,6 +40,7 @@ def main():
             dimension=64
         )
     ]
+    feature_columns = user_feature_columns + item_feature_columns
 
     # hyper-parameter
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
@@ -68,11 +69,9 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = DSSM(
-            user_feature_columns,
-            item_feature_columns,
-            user_hidden_units=[64, 32],
-            item_hidden_units=[64, 32]
+        model = MLP(
+            feature_columns,
+            hidden_units=[64, 32]
         )
         start_epoch = 0
 
