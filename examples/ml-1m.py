@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import AFM
+from pyrec.models import DSSM
 from pyrec.utils import train_validation_test_split
 
 
@@ -27,6 +27,28 @@ def main():
     ]
     multi_hot_feature_columns = []
     dense_feature_columns = []
+    user_feature_columns = {
+        'one_hot_feature_columns': [
+            categorical_column_with_identity(key='user_id', num_buckets=df['user_id'].max() + 1, default_value=0),
+        ],
+        'multi_hot_feature_columns': [
+
+        ],
+        'dense_feature_columns': [
+
+        ]
+    }
+    item_feature_columns = {
+        'one_hot_feature_columns': [
+            categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0),
+        ],
+        'multi_hot_feature_columns': [
+
+        ],
+        'dense_feature_columns': [
+
+        ]
+    }
 
     # hyper-parameter
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
@@ -55,8 +77,11 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = AFM(
-            one_hot_feature_columns
+        model = DSSM(
+            user_feature_columns,
+            item_feature_columns,
+            user_hidden_units=[64, 32],
+            item_hidden_units=[64, 32]
         )
         start_epoch = 0
 
