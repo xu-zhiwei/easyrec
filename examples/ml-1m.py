@@ -21,39 +21,30 @@ def main():
 
     # construct the feature columns
     categorical_column_with_identity = tf.feature_column.categorical_column_with_identity
+    embedding_column = tf.feature_column.embedding_column
     one_hot_feature_columns = [
         categorical_column_with_identity(key='user_id', num_buckets=df['user_id'].max() + 1, default_value=0),
         categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0),
     ]
     multi_hot_feature_columns = []
     dense_feature_columns = []
-    user_feature_columns = {
-        'one_hot_feature_columns': [
+    user_feature_columns = [
+        embedding_column(
             categorical_column_with_identity(key='user_id', num_buckets=df['user_id'].max() + 1, default_value=0),
-        ],
-        'multi_hot_feature_columns': [
-
-        ],
-        'dense_feature_columns': [
-
-        ]
-    }
-    item_feature_columns = {
-        'one_hot_feature_columns': [
+            dimension=64
+        )
+    ]
+    item_feature_columns = [
+        embedding_column(
             categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0),
-        ],
-        'multi_hot_feature_columns': [
-
-        ],
-        'dense_feature_columns': [
-
-        ]
-    }
+            dimension=64
+        )
+    ]
 
     # hyper-parameter
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
     batch_size = 128
-    learning_rate = 1e-1
+    learning_rate = 1e-2
     k = 16
     epochs = 150
 

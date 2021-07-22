@@ -22,16 +22,8 @@ class DSSM(tf.keras.models.Model):
             user_hidden_units = [256, 128, 64]
         if item_hidden_units is None:
             item_hidden_units = [256, 128, 64]
-        self.user_input_layer = DenseFeatures(
-            user_feature_columns['dense_feature_columns'] +
-            [tf.feature_column.embedding_column(feature_column, dimension=user_dimension) for feature_column in
-             user_feature_columns['one_hot_feature_columns'] + user_feature_columns['multi_hot_feature_columns']]
-        )
-        self.item_input_layer = DenseFeatures(
-            item_feature_columns['dense_feature_columns'] +
-            [tf.feature_column.embedding_column(feature_column, dimension=item_dimension) for feature_column in
-             item_feature_columns['one_hot_feature_columns'] + item_feature_columns['multi_hot_feature_columns']]
-        )
+        self.user_input_layer = DenseFeatures(user_feature_columns)
+        self.item_input_layer = DenseFeatures(item_feature_columns)
         self.user_tower = blocks.DenseBlock(hidden_units=user_hidden_units, activation=user_activation)
         self.item_tower = blocks.DenseBlock(hidden_units=item_hidden_units, activation=item_activation)
         self.score_function = score_function
