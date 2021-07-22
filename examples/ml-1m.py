@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import DeepFM
+from pyrec.models import AFM
 from pyrec.utils import train_validation_test_split
 
 
@@ -55,9 +55,8 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = DeepFM(
-            one_hot_feature_columns,
-            deep_hidden_units=[128, 64, 32]
+        model = AFM(
+            one_hot_feature_columns
         )
         start_epoch = 0
 
