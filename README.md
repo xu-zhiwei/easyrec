@@ -1,7 +1,8 @@
 # pyrec
 
-Python Tensorflow2 implementations of recommender system algorithms. The document is working in progress!!! Thank you for your attention.
+Python Tensorflow2 implementations of recommender system algorithms.
 
+# Model
 |model|source|
 |----|----|
 |Logisitic Regression (LR)||
@@ -16,3 +17,7 @@ Python Tensorflow2 implementations of recommender system algorithms. The documen
 |Neural Factorization Machine (NFM)|Xiangnan He et al. Neural Factorization Machines for Sparse Predictive Analytics. 2017. SIGIR.|
 |DeepFM|Huifeng Guo et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. arXiv. 2017.|
 |Multi-gate Mixture-of-Experts (MMOE)|Jiaqi Ma et al. Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts. KDD. 2018.|
+
+# Note
+The document is working in progress and will be released very soon!!! Thank you for your attention.
+
