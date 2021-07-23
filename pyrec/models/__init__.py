@@ -6,5 +6,6 @@ from .ffm import FFM
 from .fm import FM
 from .lr import LR
 from .mlp import MLP
+from .mmoe import MMOE
 from .pnn import PNN
 from .wide_and_deep import WideAndDeep
