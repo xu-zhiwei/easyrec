@@ -6,6 +6,7 @@ Python Tensorflow2 implementations of recommender system algorithms.
 |model|source|
 |----|----|
 |Logisitic Regression (LR)||
+|Multi-layer Perceptron (MLP)||
 |Deep Structured Semantic Model (DSSM)|Po-Sen Huang et al. Learning Deep Structured Semantic Models for Web Search using Clickthrough Data. CIKM. 2013.|
 |Factorization Machine (FM)|Steffen Rendle. Factorization Machines. ICDM. 2010.|
 |Deep Crossing|Ying Shan et al. Deep Crossing: Web-Scale Modeling without Manually Crafted Combinatorial Features. KDD. 2016.|
