@@ -1,6 +1,6 @@
 # pyrec
 
-Python Tensorflow2 implementations of recommender system algorithms.
+Python Tensorflow2 implementations of recommender system algorithms. The document is working in progress!!! Thank you for your attention.
 
 |model|source|
 |----|----|
