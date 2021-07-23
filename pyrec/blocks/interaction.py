@@ -1,6 +1,8 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Dense
 
+from pyrec import blocks
+
 
 class FM(tf.keras.models.Model):
     """
@@ -108,3 +110,33 @@ class AFM(tf.keras.models.Model):
         logits += self.b
         return logits
 
+
+class NFM(tf.keras.models.Model):
+    def __init__(self, one_hot_feature_columns, k=32, hidden_units=None, activation='relu'):
+        super(NFM, self).__init__()
+        if hidden_units is None:
+            hidden_units = [64, 32, 16]
+        self.num_fields = len(one_hot_feature_columns)
+        self.b = tf.Variable(tf.random.normal(shape=(1,)))
+        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
+                  for feature_column in one_hot_feature_columns]
+        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
+                  for feature_column in one_hot_feature_columns]
+        self.dense_block = blocks.DenseBlock(hidden_units, activation)
+        self.score = Dense(units=1, activation=activation)
+
+    def call(self, inputs, training=None, mask=None):
+        ws = [self.w[i](inputs) for i in range(self.num_fields)]
+        ws = tf.transpose(tf.convert_to_tensor(ws), [1, 0, 2])  # [batch_size, num_fields, embedding_size=1]
+        logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
+
+        vs = [self.v[i](inputs) for i in range(self.num_fields)]
+        vs = tf.transpose(tf.convert_to_tensor(vs), [1, 0, 2])  # [batch_size, num_fields, embedding_size=k]
+        square_of_sum = tf.square(tf.reduce_sum(vs, axis=1))
+        sum_of_square = tf.reduce_sum(tf.square(vs), axis=1)
+        x = 0.5 * (square_of_sum - sum_of_square)
+        x = self.dense_block(x)
+        logits += tf.squeeze(self.score(x))
+
+        logits += self.b
+        return logits

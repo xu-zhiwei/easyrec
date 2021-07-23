@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from pyrec.models import MMOE
+from pyrec.models import NFM
 from pyrec.utils import train_validation_test_split
 
 
@@ -69,9 +69,8 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = MMOE(
-            feature_columns,
-            num_towers=1
+        model = NFM(
+            one_hot_feature_columns
         )
         start_epoch = 0
 

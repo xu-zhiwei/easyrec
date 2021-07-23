@@ -1,5 +1,4 @@
 import tensorflow as tf
-
 from tensorflow.keras.layers import DenseFeatures, Dense
 
 from pyrec import blocks
