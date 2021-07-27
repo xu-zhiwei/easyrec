@@ -7,7 +7,7 @@ from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
 from easyrec.models import NFM
-from easyrec.utils import train_validation_test_split
+from examples.utils import train_validation_test_split
 
 
 def main():
