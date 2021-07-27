@@ -4,7 +4,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='easyrec',
+    name='easyrec-python',
     version='0.0.1',
     description='Easy-to-use implementations of well-known recommender system algorithms based on Python Tensorflow 2.',
     long_description=long_description,
