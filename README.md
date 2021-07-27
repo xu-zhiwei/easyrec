@@ -23,9 +23,9 @@ This project is released under the [MIT License](https://github.com/xu-zhiwei/ea
 |DeepFM|Huifeng Guo et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. arXiv. 2017.|
 |Multi-gate Mixture-of-Experts (MMOE)|Jiaqi Ma et al. Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts. KDD. 2018.|
 
-# Getting Started
+## Getting Started
 Please refer to the [documentation]() for the basic usage of *easyrec*.
 
-# Note
+## Note
 The document is working in progress and will be released very soon!!! Thank you for your attention.
 
