@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Dense
 
-from pyrec.blocks import DenseBlock
+from easyrec.blocks import DenseBlock
 
 
 class MLP(tf.keras.models.Model):

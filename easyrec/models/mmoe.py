@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Dense
 
-from pyrec import blocks
+from easyrec import blocks
 
 
 class MMOE(tf.keras.models.Model):

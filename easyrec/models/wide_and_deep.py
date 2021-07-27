@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Flatten, Dense
 
-from pyrec import blocks
+from easyrec import blocks
 
 
 class WideAndDeep(tf.keras.models.Model):

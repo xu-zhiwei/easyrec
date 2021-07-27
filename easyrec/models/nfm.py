@@ -1,19 +1,19 @@
 import tensorflow as tf
 from tensorflow.keras.activations import sigmoid
 
-from pyrec import blocks
+from easyrec import blocks
 
 
-class FFM(tf.keras.models.Model):
+class NFM(tf.keras.models.Model):
     def __init__(self,
                  one_hot_feature_columns,
-                 k=4,
+                 k=32
                  ):
-        super(FFM, self).__init__()
+        super(NFM, self).__init__()
         if not one_hot_feature_columns:
             raise ValueError('len(one_hot_feature_columns) should greater than 0')
-        self.ffm = blocks.FFM(one_hot_feature_columns, k)
+        self.nfm = blocks.NFM(one_hot_feature_columns, k=k)
 
     def call(self, inputs, training=None, mask=None):
-        logits = self.ffm(inputs)
+        logits = self.nfm(inputs)
         return sigmoid(logits)

@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Dense, Flatten
 
-from pyrec.blocks import ResidualBlock
+from easyrec.blocks import ResidualBlock
 
 
 class DeepCrossing(tf.keras.models.Model):

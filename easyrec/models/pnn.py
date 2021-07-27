@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import DenseFeatures, Dense, Flatten
 
-from pyrec import blocks
+from easyrec import blocks
 
 
 class PNN(tf.keras.models.Model):

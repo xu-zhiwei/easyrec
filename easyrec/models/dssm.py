@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.activations import sigmoid
 from tensorflow.keras.layers import DenseFeatures
 
-from pyrec import blocks
+from easyrec import blocks
 
 
 class DSSM(tf.keras.models.Model):
