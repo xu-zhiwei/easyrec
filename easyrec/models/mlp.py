@@ -5,11 +5,22 @@ from easyrec.blocks import DenseBlock
 
 
 class MLP(tf.keras.models.Model):
+    """
+    Multi-layer Perceptron.
+    """
     def __init__(self,
                  feature_columns,
                  hidden_units=None,
                  activation='relu'
                  ):
+        """
+
+        Args:
+            feature_columns: List[FeatureColumn] to feed into tf.keras.layers.DenseFeatures, which basically contains
+                all feature fields.
+            hidden_units: Dimensionality of stack outputs.
+            activation: Activation to use.
+        """
         super(MLP, self).__init__()
         if hidden_units is None:
             hidden_units = [256, 128, 64]

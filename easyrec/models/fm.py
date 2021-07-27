@@ -6,14 +6,20 @@ from easyrec import blocks
 
 class FM(tf.keras.models.Model):
     """
-    Factorization Machines.
-
+    Factorization Machine.
+    Reference: Steffen Rendle. Factorization Machines. ICDM. 2010.
     """
 
     def __init__(self,
                  one_hot_feature_columns,
                  k=16,
                  ):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            k: Dimension of the second-order weights.
+        """
         super(FM, self).__init__()
         if not one_hot_feature_columns:
             raise ValueError('len(one_hot_feature_columns) should greater than 0')

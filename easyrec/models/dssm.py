@@ -9,8 +9,6 @@ class DSSM(tf.keras.models.Model):
     def __init__(self,
                  user_feature_columns,
                  item_feature_columns,
-                 user_dimension=256,
-                 item_dimension=256,
                  user_hidden_units=None,
                  user_activation='relu',
                  item_hidden_units=None,
