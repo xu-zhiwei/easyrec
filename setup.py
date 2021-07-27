@@ -1,11 +1,11 @@
-from setuptools import Extension, dist, find_packages, setup
+from setuptools import find_packages, setup
 
 setup(
     name='pyrec',
     version='0.0.1',
-    description='Python tensorflow2 implementations of recommender system algorithms',
+    description='Easy-to-use implementations of well-known recommender system algorithms based on Python Tensorflow 2.',
     long_description='',
-    keywords='recommender system',
+    keywords='Recommender System; CTR Estimation',
     license='MIT License',
     packages=find_packages(),
     classifiers=[
@@ -19,7 +19,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Topic :: Utilities',
     ],
-    url='https://github.com/xu-zhiwei/pyrec',
+    url='https://github.com/xu-zhiwei/easyrec',
     author='Zhiwei Xu',
     author_email='zhiweixuchn@gmail.com'
-    )
+)
