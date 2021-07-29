@@ -1,5 +1,6 @@
 from typing import Tuple
 
+import pandas as pd
 import tensorflow as tf
 
 
@@ -16,3 +17,26 @@ def train_validation_test_split(dataset: tf.data.Dataset,
     validation_dataset = test_dataset.take(validation_size)
     test_dataset = test_dataset.skip(validation_size)
     return train_dataset, validation_dataset, test_dataset
+
+
+def transform_ragged_lists_to_sparse_tensor(ragged_lists: list):
+    indices, values = [], []
+    max_length = 0
+    for i, ragged_list in enumerate(ragged_lists):
+        for j, value in enumerate(ragged_list):
+            indices.append((i, j))
+            values.append(value)
+        max_length = max(max_length, len(ragged_list))
+
+    return tf.SparseTensor(
+        indices=indices,
+        values=values,
+        dense_shape=(len(ragged_lists), max_length)
+    )
+
+
+def get_vocabulary_list_from_ragged_list_series(series: pd.Series):
+    values = []
+    for ragged_list in series.values:
+        values.extend(ragged_list)
+    return set(values)
