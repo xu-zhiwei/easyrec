@@ -6,17 +6,17 @@ from easyrec.models import FM
 
 
 class FNN(tf.keras.Model):
-    def __init__(self, fm: FM, hidden_units=None, activation='tanh'):
+    def __init__(self, fm: FM, units_list=None, activation='tanh'):
         """
         Factorization Machine supported Neural Network (FNN).
 
         :param fm: pretrained Factorization Machines.
-        :param hidden_units:
+        :param units_list:
         """
         super(FNN, self).__init__()
-        if hidden_units is None:
-            hidden_units = [256, 128]
-        if hidden_units[-1] != -1:
+        if units_list is None:
+            units_list = [256, 128]
+        if units_list[-1] != -1:
             raise ValueError('last element of hidden_units should be 1')
 
         self.fm = fm
@@ -24,7 +24,7 @@ class FNN(tf.keras.Model):
             layer.trainable = False
         self.fm.trainable = False
 
-        self.dense_block = blocks.DenseBlock(hidden_units, activation)
+        self.dense_block = blocks.DenseBlock(units_list, activation)
         self.score = Dense(1, activation='sigmoid')
         self.flatten = Flatten()
 

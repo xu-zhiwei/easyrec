@@ -8,21 +8,16 @@ class LR(tf.keras.Model):
     """
 
     def __init__(self,
-                 one_hot_feature_columns,
-                 multi_hot_feature_columns,
-                 dense_feature_columns,
+                 feature_columns
                  ):
         """
 
         Args:
-            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
-            multi_hot_feature_columns: List[CategoricalColumn] encodes multi hot feature fields, such as
-                historical_item_ids.
-            dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
+            feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which basically
+                contains all feature fields.
         """
         super(LR, self).__init__()
-        self.input_layer = DenseFeatures(
-            feature_columns=one_hot_feature_columns + multi_hot_feature_columns + dense_feature_columns)
+        self.input_layer = DenseFeatures(feature_columns=feature_columns)
         self.score = Dense(units=1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):

@@ -8,14 +8,14 @@ from easyrec import blocks
 class DeepFM(tf.keras.models.Model):
     def __init__(self,
                  one_hot_feature_columns,
-                 embedding_dimension=32,
-                 deep_hidden_units=None,
+                 k=32,
+                 deep_units_list=None,
                  deep_activation='relu'
                  ):
         super(DeepFM, self).__init__()
         self.flatten = Flatten()
-        self.fm = blocks.FM(one_hot_feature_columns=one_hot_feature_columns, k=embedding_dimension)
-        self.dense_block = blocks.DenseBlock(deep_hidden_units, deep_activation)
+        self.fm = blocks.FM(one_hot_feature_columns=one_hot_feature_columns, k=k)
+        self.dense_block = blocks.DenseBlock(deep_units_list, deep_activation)
         self.score = Dense(1)
 
     def call(self, inputs, training=None, mask=None):

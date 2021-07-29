@@ -9,21 +9,21 @@ class DSSM(tf.keras.models.Model):
     def __init__(self,
                  user_feature_columns,
                  item_feature_columns,
-                 user_hidden_units=None,
+                 user_units_list=None,
                  user_activation='relu',
-                 item_hidden_units=None,
+                 item_units_list=None,
                  item_activation='relu',
                  score_function='inner_product'
                  ):
         super(DSSM, self).__init__()
-        if user_hidden_units is None:
-            user_hidden_units = [256, 128, 64]
-        if item_hidden_units is None:
-            item_hidden_units = [256, 128, 64]
+        if user_units_list is None:
+            user_units_list = [256, 128, 64]
+        if item_units_list is None:
+            item_units_list = [256, 128, 64]
         self.user_input_layer = DenseFeatures(user_feature_columns)
         self.item_input_layer = DenseFeatures(item_feature_columns)
-        self.user_tower = blocks.DenseBlock(hidden_units=user_hidden_units, activation=user_activation)
-        self.item_tower = blocks.DenseBlock(hidden_units=item_hidden_units, activation=item_activation)
+        self.user_tower = blocks.DenseBlock(units_list=user_units_list, activation=user_activation)
+        self.item_tower = blocks.DenseBlock(units_list=item_units_list, activation=item_activation)
         self.score_function = score_function
         if self.score_function not in ('inner_product', 'cosine_similarity'):
             raise ValueError(f'{self.score_function} is not supported')

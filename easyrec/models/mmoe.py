@@ -8,23 +8,23 @@ class MMOE(tf.keras.models.Model):
     def __init__(self,
                  feature_columns,
                  num_experts=3,
-                 expert_hidden_units=None,
+                 expert_units_list=None,
                  expert_activation='relu',
                  num_towers=2,
-                 tower_hidden_units=None,
+                 tower_units_list=None,
                  tower_activation='relu'
                  ):
         super(MMOE, self).__init__()
-        if expert_hidden_units is None:
-            expert_hidden_units = [256, 128, 64]
-        if tower_hidden_units is None:
-            tower_hidden_units = [256, 128, 64]
+        if expert_units_list is None:
+            expert_units_list = [256, 128, 64]
+        if tower_units_list is None:
+            tower_units_list = [256, 128, 64]
         self.num_experts = num_experts
         self.num_towers = num_towers
         self.input_layer = DenseFeatures(feature_columns)
-        self.experts = [blocks.DenseBlock(hidden_units=expert_hidden_units, activation=expert_activation)
+        self.experts = [blocks.DenseBlock(units_list=expert_units_list, activation=expert_activation)
                         for _ in range(self.num_experts)]
-        self.towers = [blocks.DenseBlock(hidden_units=tower_hidden_units, activation=tower_activation)
+        self.towers = [blocks.DenseBlock(units_list=tower_units_list, activation=tower_activation)
                        for _ in range(self.num_towers)]
         self.scores = [Dense(units=1, activation='sigmoid') for _ in range(self.num_towers)]
         self.gates = [Dense(units=self.num_experts, activation='softmax', use_bias=False)

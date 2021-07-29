@@ -24,22 +24,28 @@ class WideAndDeep(tf.keras.models.Model):
         super(WideAndDeep, self).__init__()
         if deep_hidden_units is None:
             deep_hidden_units = [1024, 512, 256]
-        self.hot_embeddings = [
-            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
+        wide_feature_columns = [
+            *[tf.feature_column.indicator_column(feature_column) for feature_column in one_hot_feature_columns],
+            *[tf.feature_column.indicator_column(feature_column) for feature_column in multi_hot_feature_columns],
+        ]
+        deep_feature_columns = [
+            *[tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
               for feature_column in one_hot_feature_columns],
-            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
+            *[tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
               for feature_column in multi_hot_feature_columns],
         ]
         if dense_feature_columns:
-            self.dense_embedding = DenseFeatures(dense_feature_columns)
-        self.flatten = Flatten()
-        self.dense_block = blocks.DenseBlock(hidden_units=deep_hidden_units, activation=deep_activation)
+            deep_feature_columns += dense_feature_columns
+
+        self.wide_input_layer = DenseFeatures(wide_feature_columns)
+        self.deep_input_layer = DenseFeatures(deep_feature_columns)
+        self.wide_dense_block = blocks.DenseBlock(units_list=[1], activation=None)
+        self.deep_dense_block = blocks.DenseBlock(units_list=deep_hidden_units, activation=deep_activation)
         self.score = Dense(units=1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
-        x = [embedding(inputs) for embedding in self.hot_embeddings]
-        x = self.flatten(tf.transpose(tf.convert_to_tensor(x), [1, 0, 2]))
-        x = self.dense_block(x)
-        if hasattr(self, 'dense_embedding'):
-            x = tf.concat((x, self.dense_embedding(inputs)), axis=1)
-        return self.score(x)
+        x1 = self.wide_input_layer(inputs)
+        x1 = self.wide_dense_block(x1)
+        x2 = self.deep_input_layer(inputs)
+        x2 = self.deep_dense_block(x2)
+        return self.score(x1 + x2)
