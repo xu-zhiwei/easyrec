@@ -44,8 +44,8 @@ class WideAndDeep(tf.keras.models.Model):
         self.score = Dense(units=1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
-        x1 = self.wide_input_layer(inputs)
-        x1 = self.wide_dense_block(x1)
-        x2 = self.deep_input_layer(inputs)
-        x2 = self.deep_dense_block(x2)
-        return self.score(x1 + x2)
+        wide = self.wide_input_layer(inputs)
+        wide = self.wide_dense_block(wide)
+        deep = self.deep_input_layer(inputs)
+        deep = self.deep_dense_block(deep)
+        return self.score(wide + deep)
