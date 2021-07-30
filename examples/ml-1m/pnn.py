@@ -6,10 +6,9 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
+from easyrec import PNN
 from examples.utils import transform_ragged_lists_to_sparse_tensor, get_vocabulary_list_from_ragged_list_series, \
     train_validation_test_split
-
-from easyrec import PNN
 
 
 def main():
@@ -61,7 +60,7 @@ def main():
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
     batch_size = 128
     learning_rate = 1e-1
-    epochs = 150
+    epochs = 15
 
     # construct the dataset
     labels = df.pop('ctr')
@@ -88,7 +87,8 @@ def main():
         model = PNN(
             one_hot_feature_columns,
             multi_hot_feature_columns,
-            use_inner_product=True
+            use_inner_product=True,
+            use_outer_product=True
         )
         start_epoch = 0
 
@@ -141,6 +141,23 @@ def main():
         if best_auc < validation_auc.result().numpy():
             best_auc = validation_auc.result().numpy()
             model.save(output_ckpt_path / 'best')
+
+    # test
+    @tf.function
+    def test_step(x, y):
+        predictions = model(x)
+        loss = loss_obj(y, predictions)
+
+        test_loss(loss)
+        test_auc(y, predictions)
+
+    model = tf.keras.models.load_model(output_ckpt_path / 'best')
+    test_loss = Mean(name='test_loss')
+    test_auc = AUC(name='test_auc')
+    for features, labels in test_dataset:
+        test_step(features, labels)
+    print('test_loss: {}, test_auc: {}'.format(test_loss.result().numpy(),
+                                               test_auc.result().numpy()))
 
 
 if __name__ == '__main__':

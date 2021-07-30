@@ -18,7 +18,7 @@ class MLP(tf.keras.models.Model):
         Args:
             feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which basically
                 contains all feature fields.
-            units_list: Dimensionality of stack outputs.
+            units_list: Dimensionality of fully connected stack outputs.
             activation: Activation to use.
         """
         super(MLP, self).__init__()

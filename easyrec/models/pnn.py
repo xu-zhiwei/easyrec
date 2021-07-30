@@ -11,27 +11,37 @@ class PNN(tf.keras.models.Model):
                  embedding_dimension=32,
                  use_inner_product=False,
                  use_outer_product=False,
-                 hidden_units=None,
+                 units_list=None,
                  activation='relu'
                  ):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            multi_hot_feature_columns: List[CategoricalColumn] encodes multi hot feature fields, such as
+                historical_item_ids.
+            embedding_dimension: embedding dimension of each field.
+            use_inner_product: whether to use IPNN.
+            use_outer_product: whether to use OPNN.
+            units_list: Dimensionality of fully connected stack outputs.
+            activation: Activation to use.
+        """
         super(PNN, self).__init__()
-        if hidden_units is None:
-            hidden_units = [128, 64]
+        if units_list is None:
+            units_list = [128, 64]
         self.embeddings = [
-            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
-              for feature_column in one_hot_feature_columns],
-            *[DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
-              for feature_column in multi_hot_feature_columns]
+            DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension))
+            for feature_column in one_hot_feature_columns + multi_hot_feature_columns
         ]
         self.use_inner_product = use_inner_product
         self.use_outer_product = use_outer_product
         self.flatten = Flatten()
-        self.dense_block = blocks.DenseBlock(hidden_units, activation)
+        self.dense_block = blocks.DenseBlock(units_list, activation)
         self.score = Dense(1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
         inputs = [embedding(inputs) for embedding in self.embeddings]
-        inputs = tf.transpose(tf.convert_to_tensor(inputs), [1, 0, 2])
+        inputs = tf.stack(inputs, axis=1)
 
         z = self.flatten(inputs)
 
