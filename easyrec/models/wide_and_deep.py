@@ -6,35 +6,38 @@ from easyrec import blocks
 
 class WideAndDeep(tf.keras.models.Model):
     """
-    Wide & Deep proposed by Google.
-
-    Note:
-        the dense_feature_columns should contain original dense feature columns
-        and hand-crafted cross transformation feature columns.
+    Wide & Deep.
+    Reference: Heng-Tze Cheng et al. Wide & Deep Learning for Recommender Systems. RecSys. 2016.
     """
 
     def __init__(self,
                  one_hot_feature_columns,
-                 multi_hot_feature_columns,
-                 dense_feature_columns,
+                 multi_hot_feature_columns=None,
+                 dense_feature_columns=None,
                  embedding_dimension=64,
                  deep_hidden_units=None,
                  deep_activation='relu'
                  ):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            multi_hot_feature_columns: List[CategoricalColumn] encodes multi hot feature fields, such as
+                historical_item_ids.
+            dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
+            embedding_dimension: Dimension of embedded CategoricalColumn.
+            deep_hidden_units: Dimensionality of fully connected stack outputs in deep block.
+            deep_activation: Activation to use in deep block.
+        """
         super(WideAndDeep, self).__init__()
         if deep_hidden_units is None:
             deep_hidden_units = [1024, 512, 256]
-        wide_feature_columns = [
-            *[tf.feature_column.indicator_column(feature_column) for feature_column in one_hot_feature_columns],
-            *[tf.feature_column.indicator_column(feature_column) for feature_column in multi_hot_feature_columns],
-        ]
-        deep_feature_columns = [
-            *[tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
-              for feature_column in one_hot_feature_columns],
-            *[tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
-              for feature_column in multi_hot_feature_columns],
-        ]
+        wide_feature_columns = [tf.feature_column.indicator_column(feature_column)
+                                for feature_column in one_hot_feature_columns + multi_hot_feature_columns]
+        deep_feature_columns = [tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
+                                for feature_column in one_hot_feature_columns + multi_hot_feature_columns]
         if dense_feature_columns:
+            wide_feature_columns += dense_feature_columns
             deep_feature_columns += dense_feature_columns
 
         self.wide_input_layer = DenseFeatures(wide_feature_columns)
