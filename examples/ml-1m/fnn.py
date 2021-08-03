@@ -96,9 +96,20 @@ def main():
     best_auc = 0
 
     @tf.function
-    def train_step(x, y, pretraining):
+    def pretrain_step(x, y):
         with tf.GradientTape() as tape:
-            predictions = model(x, pretraining)
+            predictions = model(x, True)
+            loss = loss_obj(y, predictions)
+        grads = tape.gradient(loss, model.trainable_variables)
+        optimizer.apply_gradients(zip(grads, model.trainable_variables))
+
+        train_loss(loss)
+        train_auc(y, predictions)
+
+    @tf.function
+    def train_step(x, y):
+        with tf.GradientTape() as tape:
+            predictions = model(x, False)
             loss = loss_obj(y, predictions)
         grads = tape.gradient(loss, model.trainable_variables)
         optimizer.apply_gradients(zip(grads, model.trainable_variables))
@@ -122,7 +133,10 @@ def main():
         validation_auc.reset_states()
 
         for features, labels in train_dataset:
-            train_step(features, labels, epoch + 1 <= epoch_freeze_fm)
+            if epoch + 1 <= epoch_freeze_fm:
+                pretrain_step(features, labels)
+            else:
+                train_step(features, labels)
         for features, labels in validation_dataset:
             validation_step(features, labels)
 
