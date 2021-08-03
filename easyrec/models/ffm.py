@@ -9,6 +9,7 @@ class FFM(tf.keras.models.Model):
     Field-aware Factorization Machine.
     Reference: Yuchin Juan et al. Field-aware Factorization Machines for CTR Prediction. RecSys. 2016.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  k=4,

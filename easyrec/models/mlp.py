@@ -8,6 +8,7 @@ class MLP(tf.keras.models.Model):
     """
     Multi-layer Perceptron.
     """
+
     def __init__(self,
                  feature_columns,
                  units_list=None,

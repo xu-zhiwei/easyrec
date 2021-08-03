@@ -44,4 +44,3 @@ class MMOE(tf.keras.models.Model):
 
         logits = self.towers[use_tower](outputs)
         return self.scores[use_tower](logits)
-

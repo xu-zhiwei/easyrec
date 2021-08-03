@@ -1,6 +1,6 @@
 import tensorflow as tf
-from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.activations import sigmoid
+from tensorflow.keras.layers import Dense, Flatten
 
 from easyrec import blocks
 

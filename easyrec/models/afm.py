@@ -10,6 +10,7 @@ class AFM(tf.keras.models.Model):
     Reference: Jun Xiao et al. Attentional Factorization Machines:Learning the Weight of Feature Interactions
         via Attention Networks. arXiv. 2017.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  k=16):

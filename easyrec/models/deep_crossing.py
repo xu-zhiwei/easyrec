@@ -10,6 +10,7 @@ class DeepCrossing(tf.keras.models.Model):
     Reference: Ying Shan et al. Deep Crossing: Web-Scale Modeling without Manually Crafted Combinatorial
         Features. KDD. 2016.
     """
+
     def __init__(self,
                  feature_columns,
                  num_residual_blocks=5,

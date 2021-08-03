@@ -1,6 +1,6 @@
 import tensorflow as tf
-
 from tensorflow.keras.layers import DenseFeatures, Dense
+
 from easyrec import blocks
 
 
@@ -9,6 +9,7 @@ class NeuMF(tf.keras.models.Model):
     Neural Matrix Factorization.
     Xiangnan He et al. Neural Factorization Machines for Sparse Predictive Analytics. SIGIR. 2017.
     """
+
     def __init__(self,
                  user_feature_column,
                  item_feature_column,
@@ -27,6 +28,8 @@ class NeuMF(tf.keras.models.Model):
             activation: Activation to use.
         """
         super(NeuMF, self).__init__()
+        if units_list is None:
+            units_list = [256, 128, 64]
         self.user_input_layer1 = DenseFeatures(
             tf.feature_column.embedding_column(user_feature_column, dimension=user_embedding_dimension)
         )
@@ -49,5 +52,3 @@ class NeuMF(tf.keras.models.Model):
         )
         x = tf.concat((gmf, mlp), axis=1)
         return self.score(x)
-
-

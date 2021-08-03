@@ -10,6 +10,7 @@ class DeepFM(tf.keras.models.Model):
     DeepFM.
     Reference: Huifeng Guo et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. arXiv. 2017.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  k=32,

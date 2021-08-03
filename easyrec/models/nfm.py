@@ -9,6 +9,7 @@ class NFM(tf.keras.models.Model):
     Neural Factorization Machine.
     Xiangnan He et al. Neural Factorization Machines for Sparse Predictive Analytics. SIGIR. 2017.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  k=32

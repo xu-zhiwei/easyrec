@@ -10,6 +10,7 @@ class DSSM(tf.keras.models.Model):
     Deep Structured Semantic Model.
     Po-Sen Huang et al. Learning Deep Structured Semantic Models for Web Search using Clickthrough Data. CIKM. 2013.
     """
+
     def __init__(self,
                  user_feature_columns,
                  item_feature_columns,
