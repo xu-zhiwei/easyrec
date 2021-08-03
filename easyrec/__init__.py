@@ -11,3 +11,4 @@ from easyrec.models import NFM
 from easyrec.models import PNN
 from easyrec.models import WideAndDeep
 from easyrec.models import FNN
+from easyrec.models import NeuMF
