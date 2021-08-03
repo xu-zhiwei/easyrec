@@ -25,6 +25,8 @@ class DeepFM(tf.keras.models.Model):
             deep_activation: Activation to use in deep block.
         """
         super(DeepFM, self).__init__()
+        if deep_units_list is None:
+            deep_units_list = [256, 128]
         self.flatten = Flatten()
         self.fm = blocks.FM(one_hot_feature_columns=one_hot_feature_columns, k=k)
         self.dense_block = blocks.DenseBlock(deep_units_list, deep_activation)

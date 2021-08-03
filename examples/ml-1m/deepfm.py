@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from easyrec import AFM
+from easyrec import DeepFM
 from examples.utils import transform_ragged_lists_to_sparse_tensor, train_validation_test_split
 
 
@@ -77,9 +77,10 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = AFM(
+        model = DeepFM(
             one_hot_feature_columns,
-            k=32
+            k=32,
+            deep_units_list=[128, 64]
         )
         start_epoch = 0
 
