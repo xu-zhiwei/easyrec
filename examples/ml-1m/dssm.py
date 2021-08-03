@@ -6,8 +6,9 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from easyrec import FM
-from examples.utils import transform_ragged_lists_to_sparse_tensor, train_validation_test_split
+from easyrec import DSSM
+from examples.utils import transform_ragged_lists_to_sparse_tensor, get_vocabulary_list_from_ragged_list_series, \
+    train_validation_test_split
 
 
 def main():
@@ -36,7 +37,8 @@ def main():
     # construct the feature columns
     categorical_column_with_identity = tf.feature_column.categorical_column_with_identity
     categorical_column_with_vocabulary_list = tf.feature_column.categorical_column_with_vocabulary_list
-    one_hot_feature_columns = [
+    indicator_column = tf.feature_column.indicator_column
+    user_feature_columns = [
         categorical_column_with_identity(key='user_id', num_buckets=df['user_id'].max() + 1, default_value=0),
         categorical_column_with_vocabulary_list(
             key='sex_id', vocabulary_list=set(df['sex_id'].values), num_oov_buckets=1),
@@ -46,14 +48,22 @@ def main():
             key='occupation_id', vocabulary_list=set(df['occupation_id'].values), num_oov_buckets=1),
         categorical_column_with_vocabulary_list(
             key='zip_code_id', vocabulary_list=set(df['zip_code_id'].values), num_oov_buckets=1),
-        categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0),
     ]
+    item_feature_columns = [
+        categorical_column_with_identity(key='item_id', num_buckets=df['item_id'].max() + 1, default_value=0),
+        categorical_column_with_vocabulary_list(
+            key='genre_ids', vocabulary_list=get_vocabulary_list_from_ragged_list_series(item_df['genre_ids']),
+            num_oov_buckets=1
+        )
+    ]
+    user_feature_columns = [indicator_column(feature_column) for feature_column in user_feature_columns]
+    item_feature_columns = [indicator_column(feature_column) for feature_column in item_feature_columns]
 
     # hyper-parameter
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
     batch_size = 128
     learning_rate = 1e-1
-    epochs = 50
+    epochs = 10
 
     # construct the dataset
     labels = df.pop('ctr')
@@ -77,9 +87,9 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = FM(
-            one_hot_feature_columns,
-            k=32
+        model = DSSM(
+            user_feature_columns,
+            item_feature_columns
         )
         start_epoch = 0
 

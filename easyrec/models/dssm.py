@@ -6,6 +6,10 @@ from easyrec import blocks
 
 
 class DSSM(tf.keras.models.Model):
+    """
+    Deep Structured Semantic Model.
+    Po-Sen Huang et al. Learning Deep Structured Semantic Models for Web Search using Clickthrough Data. CIKM. 2013.
+    """
     def __init__(self,
                  user_feature_columns,
                  item_feature_columns,
@@ -15,6 +19,17 @@ class DSSM(tf.keras.models.Model):
                  item_activation='relu',
                  score_function='inner_product'
                  ):
+        """
+
+        Args:
+            user_feature_columns:
+            item_feature_columns:
+            user_units_list:
+            user_activation:
+            item_units_list:
+            item_activation:
+            score_function:
+        """
         super(DSSM, self).__init__()
         if user_units_list is None:
             user_units_list = [256, 128, 64]

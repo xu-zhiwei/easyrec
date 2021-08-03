@@ -5,12 +5,26 @@ from easyrec.blocks import ResidualBlock
 
 
 class DeepCrossing(tf.keras.models.Model):
+    """
+    Deep Crossing.
+    Reference: Ying Shan et al. Deep Crossing: Web-Scale Modeling without Manually Crafted Combinatorial
+        Features. KDD. 2016.
+    """
     def __init__(self,
                  feature_columns,
                  num_residual_blocks=5,
                  residual_units_list=None,
                  residual_activation='relu'
                  ):
+        """
+
+        Args:
+            feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which basically
+                contains all feature fields.
+            num_residual_blocks: Number of residual blocks.
+            residual_units_list: Dimensionality of fully connected stack outputs in residual block.
+            residual_activation: Activation to use in residual block.
+        """
         super(DeepCrossing, self).__init__()
         if residual_units_list is None:
             residual_units_list = [256, 256]

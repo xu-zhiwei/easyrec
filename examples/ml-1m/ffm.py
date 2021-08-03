@@ -6,7 +6,7 @@ from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
-from easyrec import FM
+from easyrec import FFM
 from examples.utils import transform_ragged_lists_to_sparse_tensor, train_validation_test_split
 
 
@@ -53,7 +53,7 @@ def main():
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
     batch_size = 128
     learning_rate = 1e-1
-    epochs = 50
+    epochs = 15
 
     # construct the dataset
     labels = df.pop('ctr')
@@ -77,9 +77,9 @@ def main():
         model = tf.keras.models.load_model(args.input_ckpt_path)
         start_epoch = int(input_ckpt_path.name)
     else:
-        model = FM(
+        model = FFM(
             one_hot_feature_columns,
-            k=32
+            k=8
         )
         start_epoch = 0
 

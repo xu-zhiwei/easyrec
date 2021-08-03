@@ -10,3 +10,4 @@ from easyrec.models.mmoe import MMOE
 from easyrec.models.nfm import NFM
 from easyrec.models.pnn import PNN
 from easyrec.models.wide_and_deep import WideAndDeep
+from easyrec.models.fnn import FNN
