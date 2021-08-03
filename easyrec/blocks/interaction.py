@@ -12,10 +12,12 @@ class FM(tf.keras.models.Model):
     def __init__(self, one_hot_feature_columns, k=16):
         super(FM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
-        self.b = tf.Variable(tf.random.normal(shape=(1,)))
-        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
+        self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
+        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1),
+                                name=f'w_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
-        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
+        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k),
+                                name=f'v_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
 
     def call(self, inputs, *args, **kwargs):
@@ -46,12 +48,14 @@ class FFM(tf.keras.models.Model):
     def __init__(self, one_hot_feature_columns, k=4):
         super(FFM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
-        self.b = tf.Variable(tf.random.normal(shape=(1,)))
-        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
+        self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
+        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1),
+                                name=f'w_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
         self.vv = [
             [
-                DenseFeatures(tf.feature_column.embedding_column(one_hot_feature_columns[j], dimension=k))
+                DenseFeatures(tf.feature_column.embedding_column(one_hot_feature_columns[j], dimension=k),
+                              name=f'vv_{one_hot_feature_columns[i].name}_{one_hot_feature_columns[j].name}')
                 if i != j else None
                 for j in range(self.num_fields)
             ]
@@ -78,10 +82,12 @@ class AFM(tf.keras.models.Model):
     def __init__(self, one_hot_feature_columns, k=16):
         super(AFM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
-        self.b = tf.Variable(tf.random.normal(shape=(1,)))
-        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
+        self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
+        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1),
+                                name=f'w_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
-        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
+        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k),
+                                name=f'v_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
 
         self.att = Dense(units=k, activation='relu')
@@ -113,10 +119,12 @@ class NFM(tf.keras.models.Model):
         if hidden_units is None:
             hidden_units = [64, 32, 16]
         self.num_fields = len(one_hot_feature_columns)
-        self.b = tf.Variable(tf.random.normal(shape=(1,)))
-        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1))
+        self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
+        self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1),
+                                name=f'w_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
-        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k))
+        self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k),
+                                name=f'v_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
         self.dense_block = blocks.DenseBlock(hidden_units, activation)
         self.score = Dense(units=1, activation=activation)

@@ -60,7 +60,7 @@ def main():
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
     batch_size = 128
     learning_rate = 1e-1
-    epochs = 10
+    epochs = 8
 
     # construct the dataset
     labels = df.pop('ctr')
