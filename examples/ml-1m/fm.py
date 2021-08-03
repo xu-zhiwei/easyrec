@@ -7,8 +7,7 @@ from tensorflow.keras.metrics import Mean, AUC
 from tensorflow.keras.optimizers import SGD
 
 from easyrec import FM
-from examples.utils import transform_ragged_lists_to_sparse_tensor, get_vocabulary_list_from_ragged_list_series, \
-    train_validation_test_split
+from examples.utils import transform_ragged_lists_to_sparse_tensor, train_validation_test_split
 
 
 def main():

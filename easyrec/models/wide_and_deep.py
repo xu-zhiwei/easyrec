@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.layers import DenseFeatures, Flatten, Dense
+from tensorflow.keras.layers import DenseFeatures, Dense
 
 from easyrec import blocks
 

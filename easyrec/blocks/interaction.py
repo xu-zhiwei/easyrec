@@ -26,12 +26,10 @@ class FM(tf.keras.models.Model):
         Returns:
             logits
         """
-        ws = [self.w[i](inputs) for i in range(self.num_fields)]
-        ws = tf.transpose(tf.convert_to_tensor(ws), [1, 0, 2])  # [batch_size, num_fields, embedding_size=1]
+        ws = tf.stack([self.w[i](inputs) for i in range(self.num_fields)], axis=1)
         logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
 
-        vs = [self.v[i](inputs) for i in range(self.num_fields)]
-        vs = tf.transpose(tf.convert_to_tensor(vs), [1, 0, 2])  # [batch_size, num_fields, embedding_size=k]
+        vs = tf.stack([self.v[i](inputs) for i in range(self.num_fields)], axis=1)
         square_of_sum = tf.square(tf.reduce_sum(vs, axis=1))
         sum_of_square = tf.reduce_sum(tf.square(vs), axis=1)
         logits += 0.5 * tf.reduce_sum(square_of_sum - sum_of_square, axis=1)
@@ -61,8 +59,7 @@ class FFM(tf.keras.models.Model):
         ]
 
     def call(self, inputs, *args, **kwargs):
-        ws = [self.w[i](inputs) for i in range(self.num_fields)]
-        ws = tf.transpose(tf.convert_to_tensor(ws), [1, 0, 2])  # [batch_size, num_fields, embedding_size=1]
+        ws = tf.stack([self.w[i](inputs) for i in range(self.num_fields)], axis=1)
         logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
 
         for i in range(self.num_fields - 1):
@@ -92,8 +89,7 @@ class AFM(tf.keras.models.Model):
         self.p = Dense(units=1, use_bias=False)
 
     def call(self, inputs, training=None, mask=None):
-        ws = [self.w[i](inputs) for i in range(self.num_fields)]
-        ws = tf.transpose(tf.convert_to_tensor(ws), [1, 0, 2])  # [batch_size, num_fields, embedding_size=1]
+        ws = tf.stack([self.w[i](inputs) for i in range(self.num_fields)], axis=1)
         logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
 
         vs = [self.v[i](inputs) for i in range(self.num_fields)]
@@ -126,12 +122,10 @@ class NFM(tf.keras.models.Model):
         self.score = Dense(units=1, activation=activation)
 
     def call(self, inputs, training=None, mask=None):
-        ws = [self.w[i](inputs) for i in range(self.num_fields)]
-        ws = tf.transpose(tf.convert_to_tensor(ws), [1, 0, 2])  # [batch_size, num_fields, embedding_size=1]
+        ws = tf.stack([self.w[i](inputs) for i in range(self.num_fields)], axis=1)
         logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
 
-        vs = [self.v[i](inputs) for i in range(self.num_fields)]
-        vs = tf.transpose(tf.convert_to_tensor(vs), [1, 0, 2])  # [batch_size, num_fields, embedding_size=k]
+        vs = tf.stack([self.v[i](inputs) for i in range(self.num_fields)], axis=1)
         square_of_sum = tf.square(tf.reduce_sum(vs, axis=1))
         sum_of_square = tf.reduce_sum(tf.square(vs), axis=1)
         x = 0.5 * (square_of_sum - sum_of_square)
