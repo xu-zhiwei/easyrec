@@ -22,13 +22,15 @@ class DSSM(tf.keras.models.Model):
         """
 
         Args:
-            user_feature_columns:
-            item_feature_columns:
-            user_units_list:
-            user_activation:
-            item_units_list:
-            item_activation:
-            score_function:
+            user_feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which
+                basically contains user feature fields.
+            item_feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which
+                basically contains item feature fields.
+            user_units_list: Dimensionality of fully connected stack outputs in user dense block.
+            user_activation: Activation to use in user dense block.
+            item_units_list: Dimensionality of fully connected stack outputs in item dense block.
+            item_activation: Activation to use in item dense block.
+            score_function: Final output function to combine the user embedding and item embedding.
         """
         super(DSSM, self).__init__()
         if user_units_list is None:

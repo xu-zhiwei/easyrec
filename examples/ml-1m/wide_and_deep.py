@@ -87,7 +87,7 @@ def main():
         model = WideAndDeep(
             one_hot_feature_columns,
             multi_hot_feature_columns,
-            deep_hidden_units=[256, 128]
+            deep_units_list=[256, 128]
         )
         start_epoch = 0
 

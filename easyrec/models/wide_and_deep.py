@@ -15,7 +15,7 @@ class WideAndDeep(tf.keras.models.Model):
                  multi_hot_feature_columns=None,
                  dense_feature_columns=None,
                  embedding_dimension=64,
-                 deep_hidden_units=None,
+                 deep_units_list=None,
                  deep_activation='relu'
                  ):
         """
@@ -26,12 +26,12 @@ class WideAndDeep(tf.keras.models.Model):
                 historical_item_ids.
             dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
             embedding_dimension: Dimension of embedded CategoricalColumn.
-            deep_hidden_units: Dimensionality of fully connected stack outputs in deep block.
-            deep_activation: Activation to use in deep block.
+            deep_units_list: Dimensionality of fully connected stack outputs in deep dense block.
+            deep_activation: Activation to use in deep dense block.
         """
         super(WideAndDeep, self).__init__()
-        if deep_hidden_units is None:
-            deep_hidden_units = [1024, 512, 256]
+        if deep_units_list is None:
+            deep_units_list = [1024, 512, 256]
         wide_feature_columns = [tf.feature_column.indicator_column(feature_column)
                                 for feature_column in one_hot_feature_columns + multi_hot_feature_columns]
         deep_feature_columns = [tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
@@ -43,7 +43,7 @@ class WideAndDeep(tf.keras.models.Model):
         self.wide_input_layer = DenseFeatures(wide_feature_columns)
         self.deep_input_layer = DenseFeatures(deep_feature_columns)
         self.wide_dense_block = blocks.DenseBlock(units_list=[1], activation=None)
-        self.deep_dense_block = blocks.DenseBlock(units_list=deep_hidden_units, activation=deep_activation)
+        self.deep_dense_block = blocks.DenseBlock(units_list=deep_units_list, activation=deep_activation)
         self.score = Dense(units=1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
