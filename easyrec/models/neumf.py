@@ -16,7 +16,9 @@ class NeuMF(tf.keras.models.Model):
                  user_embedding_dimension=64,
                  item_embedding_dimension=64,
                  units_list=None,
-                 activation='relu'):
+                 activation='relu',
+                 alpha=0.5
+                 ):
         """
 
         Args:
@@ -26,10 +28,12 @@ class NeuMF(tf.keras.models.Model):
             item_embedding_dimension: Dimension of item embedding.
             units_list: Dimensionality of fully connected stack outputs.
             activation: Activation to use.
+            alpha: Tendency parameter for GMF, thus, 1 - alpha is used for MLP.
         """
         super(NeuMF, self).__init__()
         if units_list is None:
             units_list = [256, 128, 64]
+        self.alpha = tf.constant(alpha)
         self.user_input_layer1 = DenseFeatures(
             tf.feature_column.embedding_column(user_feature_column, dimension=user_embedding_dimension)
         )
@@ -50,5 +54,5 @@ class NeuMF(tf.keras.models.Model):
         mlp = self.dense_block(
             tf.concat((self.user_input_layer2(inputs), self.item_input_layer2(inputs)), axis=1)
         )
-        x = tf.concat((gmf, mlp), axis=1)
+        x = tf.concat((self.alpha * gmf, (1 - self.alpha) * mlp), axis=1)
         return self.score(x)

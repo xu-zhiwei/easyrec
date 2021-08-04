@@ -88,7 +88,8 @@ def main():
         model = DCN(
             one_hot_feature_columns,
             multi_hot_feature_columns,
-            dense_feature_columns
+            dense_feature_columns,
+            deep_units_list=[128, 64]
         )
         start_epoch = 0
 
