@@ -5,6 +5,10 @@ from easyrec import blocks
 
 
 class DCN(tf.keras.models.Model):
+    """
+    Deep & Cross Network.
+    Reference: Ruoxi Wang et al. Deep & Cross Network for ad Click Predictions. ADKDD. 2017.
+    """
     def __init__(self,
                  one_hot_feature_columns,
                  multi_hot_feature_columns,
@@ -13,6 +17,18 @@ class DCN(tf.keras.models.Model):
                  num_crosses=5,
                  deep_units_list=None,
                  deep_activation='relu'):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            multi_hot_feature_columns: List[CategoricalColumn] encodes multi hot feature fields, such as
+                historical_item_ids.
+            dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
+            embedding_dimension: Dimension of embedded CategoricalColumn.
+            num_crosses: Number of crosses.
+            deep_units_list: Dimensionality of fully connected stack outputs in deep dense block.
+            deep_activation: Activation to use in deep dense block.
+        """
         super(DCN, self).__init__()
         if deep_units_list is None:
             deep_units_list = [256, 128, 64]
