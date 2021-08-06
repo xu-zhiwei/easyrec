@@ -55,6 +55,7 @@ def main():
             num_oov_buckets=1
         )
     ]
+    dense_feature_columns = []
 
     # hyper-parameter
     train_ratio, validation_ratio, test_ratio = [0.6, 0.2, 0.2]
@@ -87,6 +88,7 @@ def main():
         model = WideAndDeep(
             one_hot_feature_columns,
             multi_hot_feature_columns,
+            dense_feature_columns,
             deep_units_list=[256, 128]
         )
         start_epoch = 0
