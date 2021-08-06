@@ -5,6 +5,11 @@ from easyrec import blocks
 
 
 class MMOE(tf.keras.models.Model):
+    """
+    Multi-gate Mixture-of-Experts (MMOE).
+    Reference: Jiaqi Ma et al. Modeling Task Relationships in Multi-task Learning with Multi-gate
+        Mixture-of-Experts. KDD. 2018.
+    """
     def __init__(self,
                  feature_columns,
                  num_experts=3,
@@ -14,6 +19,18 @@ class MMOE(tf.keras.models.Model):
                  tower_units_list=None,
                  tower_activation='relu'
                  ):
+        """
+
+        Args:
+            feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which basically
+                contains all feature fields.
+            num_experts: Number of experts.
+            expert_units_list: Dimensionality of fully connected stack outputs in expert dense block.
+            expert_activation: Activation to use in expert dense block.
+            num_towers: Number of towers (tasks).
+            tower_units_list: Dimensionality of fully connected stack outputs in tower dense block.
+            tower_activation: Activation to use in tower dense block.
+        """
         super(MMOE, self).__init__()
         if expert_units_list is None:
             expert_units_list = [256, 128, 64]
