@@ -20,9 +20,10 @@ This project is released under the [MIT License](https://github.com/xu-zhiwei/ea
 | Wide & Deep | Heng-Tze Cheng et al. Wide & Deep Learning for Recommender Systems. RecSys. 2016. |
 | Attentional Factorization Machine (AFM) | Jun Xiao et al. Attentional Factorization Machines:Learning the Weight of Feature Interactions via Attention Networks. arXiv. 2017. |
 | Neural Factorization Machine (NFM) | Xiangnan He et al. Neural Factorization Machines for Sparse Predictive Analytics. SIGIR. 2017. |
+| Neural Matrix Factorization (NMF) | Xiangnan He et al. Neural Collaborative Filtering. WWW. 2017. |
 | Deep & Cross Network (DCN) | Ruoxi Wang et al. Deep & Cross Network for ad Click Predictions. ADKDD. 2017. |
-| DeepFM | Huifeng Guo et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. arXiv. 2017. |
-| xDeepFM | Jianxun Lian et al. xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender Systems. |
+| Deep Factorization Machine (DeepFM) | Huifeng Guo et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. arXiv. 2017. |
+| Extreme Deep Factorization Machine (xDeepFM) | Jianxun Lian et al. xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender Systems. KDD. 2018. |
 | Multi-gate Mixture-of-Experts (MMOE) | Jiaqi Ma et al. Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts. KDD. 2018. |
 | Automatic Feature Interaction (AutoInt) | AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks. CIKM. 2019. |
 
