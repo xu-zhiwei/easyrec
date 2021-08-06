@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class NFM(tf.keras.models.Model):
     """
-    Neural Factorization Machine.
+    Neural Factorization Machine (NFM).
     Xiangnan He et al. Neural Factorization Machines for Sparse Predictive Analytics. SIGIR. 2017.
     """
 

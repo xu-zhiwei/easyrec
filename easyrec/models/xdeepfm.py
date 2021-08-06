@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class xDeepFM(tf.keras.models.Model):
     """
-    xDeepFM.
+    Extreme Deep Factorization Machine (xDeepFM).
     Reference: Jianxun Lian et al. xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender
         Systems. KDD. 2018.
     """

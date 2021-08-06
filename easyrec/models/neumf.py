@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class NeuMF(tf.keras.models.Model):
     """
-    Neural Matrix Factorization.
+    Neural Matrix Factorization (NeuMF).
     Xiangnan He et al. Neural Factorization Machines for Sparse Predictive Analytics. SIGIR. 2017.
     """
 

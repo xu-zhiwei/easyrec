@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class AFM(tf.keras.models.Model):
     """
-    Attentional Factorization Machines.
+    Attentional Factorization Machines (AFM).
     Reference: Jun Xiao et al. Attentional Factorization Machines:Learning the Weight of Feature Interactions
         via Attention Networks. arXiv. 2017.
     """

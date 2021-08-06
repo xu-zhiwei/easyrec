@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class FFM(tf.keras.models.Model):
     """
-    Field-aware Factorization Machine.
+    Field-aware Factorization Machine (FFM).
     Reference: Yuchin Juan et al. Field-aware Factorization Machines for CTR Prediction. RecSys. 2016.
     """
 

@@ -7,7 +7,7 @@ from easyrec import blocks
 
 class DeepFM(tf.keras.models.Model):
     """
-    DeepFM.
+    Deep Factorization Machine (DeepFM).
     Reference: Huifeng Guo et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. arXiv. 2017.
     """
 

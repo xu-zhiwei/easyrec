@@ -4,7 +4,7 @@ from tensorflow.keras.layers import DenseFeatures, Dense
 
 class LR(tf.keras.Model):
     """
-    Logisitic Regression.
+    Logisitic Regression (LR).
     """
 
     def __init__(self,

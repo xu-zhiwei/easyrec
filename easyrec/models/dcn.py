@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class DCN(tf.keras.models.Model):
     """
-    Deep & Cross Network.
+    Deep & Cross Network (DCN).
     Reference: Ruoxi Wang et al. Deep & Cross Network for ad Click Predictions. ADKDD. 2017.
     """
     def __init__(self,

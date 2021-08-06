@@ -7,7 +7,7 @@ from easyrec import blocks
 
 class FNN(tf.keras.Model):
     """
-    Factorization-machine supported Neural Network.
+    Factorization-machine supported Neural Network (FNN).
     Reference: Weinan Zhang. Deep Learning over Multi-field Categorical Data – A Case Study on User Response
         Prediction. ECIR. 2016.
     """

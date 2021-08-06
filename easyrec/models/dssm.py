@@ -7,7 +7,7 @@ from easyrec import blocks
 
 class DSSM(tf.keras.models.Model):
     """
-    Deep Structured Semantic Model.
+    Deep Structured Semantic Model (DSSM).
     Po-Sen Huang et al. Learning Deep Structured Semantic Models for Web Search using Clickthrough Data. CIKM. 2013.
     """
 

@@ -6,7 +6,7 @@ from easyrec.blocks import DenseBlock
 
 class MLP(tf.keras.models.Model):
     """
-    Multi-layer Perceptron.
+    Multi-layer Perceptron (MLP).
     """
 
     def __init__(self,

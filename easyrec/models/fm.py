@@ -6,7 +6,7 @@ from easyrec import blocks
 
 class FM(tf.keras.models.Model):
     """
-    Factorization Machine.
+    Factorization Machine (FM).
     Reference: Steffen Rendle. Factorization Machines. ICDM. 2010.
     """
 
