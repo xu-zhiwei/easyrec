@@ -32,10 +32,14 @@ class WideAndDeep(tf.keras.models.Model):
         super(WideAndDeep, self).__init__()
         if deep_units_list is None:
             deep_units_list = [1024, 512, 256]
-        wide_feature_columns = dense_feature_columns + [tf.feature_column.indicator_column(feature_column)
-                                for feature_column in one_hot_feature_columns + multi_hot_feature_columns]
-        deep_feature_columns = dense_feature_columns + [tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
-                                for feature_column in one_hot_feature_columns + multi_hot_feature_columns]
+        wide_feature_columns = dense_feature_columns + [
+            tf.feature_column.indicator_column(feature_column)
+            for feature_column in one_hot_feature_columns + multi_hot_feature_columns
+        ]
+        deep_feature_columns = dense_feature_columns + [
+            tf.feature_column.embedding_column(feature_column, dimension=embedding_dimension)
+            for feature_column in one_hot_feature_columns + multi_hot_feature_columns
+        ]
 
         self.wide_input_layer = DenseFeatures(wide_feature_columns)
         self.deep_input_layer = DenseFeatures(deep_feature_columns)

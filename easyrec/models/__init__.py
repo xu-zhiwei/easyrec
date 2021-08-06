@@ -1,4 +1,5 @@
 from easyrec.models.afm import AFM
+from easyrec.models.autoint import AutoInt
 from easyrec.models.dcn import DCN
 from easyrec.models.deep_crossing import DeepCrossing
 from easyrec.models.deepfm import DeepFM
