@@ -11,6 +11,11 @@ Welcome to easyrec's documentation!
    :caption: Get Started
 
    get_started.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Quick Run
+
    quick_run.md
 
 
