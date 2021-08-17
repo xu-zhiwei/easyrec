@@ -1,2 +1,2 @@
-tensorflow>=2.1.0
-pandas==1.2.4
+-r requirements/easyrec.txt
+-r requirements/docs.txt
