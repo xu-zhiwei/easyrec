@@ -22,13 +22,14 @@ class AutoInt(tf.keras.models.Model):
         """
 
         Args:
-            one_hot_feature_columns:
-            multi_hot_feature_columns:
-            dense_feature_columns:
-            embedding_dimension:
-            num_heads:
-            attention_qkv_dimension:
-            attention_output_dimension:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            multi_hot_feature_columns: List[CategoricalColumn] encodes multi hot feature fields, such as
+                historical_item_ids.
+            dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
+            embedding_dimension: Dimension of embedded Column.
+            num_heads: Number of heads.
+            attention_qkv_dimension: Dimension of Query, Key and Value self attention.
+            attention_output_dimension: Dimension of output in self attention.
         """
         super(AutoInt, self).__init__()
         assert embedding_dimension == attention_output_dimension, \
