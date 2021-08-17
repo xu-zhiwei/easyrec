@@ -11,6 +11,7 @@ Welcome to easyrec's documentation!
    :caption: Get Started
 
    get_started.md
+   quick_run.md
 
 
 
