@@ -29,7 +29,7 @@ class AutoInt(tf.keras.models.Model):
             dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
             embedding_dimension: Dimension of embedded Column.
             num_heads: Number of heads.
-            attention_qkv_dimension: Dimension of Query, Key and Value self attention.
+            attention_qkv_dimension: Dimension of Query, Key and Value in self attention.
             attention_output_dimension: Dimension of output in self attention.
         """
         super(AutoInt, self).__init__()

@@ -27,7 +27,7 @@ class DCN(tf.keras.models.Model):
             dense_feature_columns: List[NumericalColumn] encodes numerical feature fields, such as age.
             embedding_dimension: Dimension of embedded CategoricalColumn.
             num_crosses: Number of crosses.
-            deep_units_list: Dimensionality of fully connected stack outputs in deep dense block.
+            deep_units_list: Dimension of fully connected stack outputs in deep dense block.
             deep_activation: Activation to use in deep dense block.
         """
         super(DCN, self).__init__()

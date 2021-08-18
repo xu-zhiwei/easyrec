@@ -10,6 +10,12 @@ class FM(tf.keras.models.Model):
     """
 
     def __init__(self, one_hot_feature_columns, k=16):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            k: Dimension of the second-order weights.
+        """
         super(FM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
         self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
@@ -21,13 +27,6 @@ class FM(tf.keras.models.Model):
                   for feature_column in one_hot_feature_columns]
 
     def call(self, inputs, *args, **kwargs):
-        """
-
-        Args:
-            inputs: [batch_size, dimension]
-        Returns:
-            logits
-        """
         ws = tf.stack([self.w[i](inputs) for i in range(self.num_fields)], axis=1)
         logits = tf.reduce_sum(tf.squeeze(ws), axis=1)
 
@@ -46,6 +45,12 @@ class FFM(tf.keras.models.Model):
     """
 
     def __init__(self, one_hot_feature_columns, k=4):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            k: Dimension of the second-order weights.
+        """
         super(FFM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
         self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
@@ -80,6 +85,12 @@ class AFM(tf.keras.models.Model):
     """
 
     def __init__(self, one_hot_feature_columns, k=16):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            k: Dimension of the second-order weights.
+        """
         super(AFM, self).__init__()
         self.num_fields = len(one_hot_feature_columns)
         self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
@@ -114,10 +125,21 @@ class AFM(tf.keras.models.Model):
 
 
 class NFM(tf.keras.models.Model):
-    def __init__(self, one_hot_feature_columns, k=32, hidden_units=None, activation='relu'):
+    """
+    Neural factorization machine layer.
+    """
+    def __init__(self, one_hot_feature_columns, k=32, units_list=None, activation='relu'):
+        """
+
+        Args:
+            one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
+            k: Dimension of the second-order weights.
+            units_list: Dimension of fully connected stack outputs.
+            activation: Activation to use.
+        """
         super(NFM, self).__init__()
-        if hidden_units is None:
-            hidden_units = [64, 32, 16]
+        if units_list is None:
+            units_list = [64, 32, 16]
         self.num_fields = len(one_hot_feature_columns)
         self.b = tf.Variable(tf.random.normal(shape=(1,)), name='b')
         self.w = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=1),
@@ -126,7 +148,7 @@ class NFM(tf.keras.models.Model):
         self.v = [DenseFeatures(tf.feature_column.embedding_column(feature_column, dimension=k),
                                 name=f'v_{feature_column.name}')
                   for feature_column in one_hot_feature_columns]
-        self.dense_block = blocks.DenseBlock(hidden_units, activation)
+        self.dense_block = blocks.DenseBlock(units_list, activation)
         self.score = Dense(units=1, activation=activation)
 
     def call(self, inputs, training=None, mask=None):

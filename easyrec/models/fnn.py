@@ -21,7 +21,7 @@ class FNN(tf.keras.Model):
         """
         fm: Pretrained Factorization Machines.
         one_hot_feature_columns: List[CategoricalColumn] encodes one hot feature fields, such as sex_id.
-        units_list: Dimensionality of fully connected stack outputs.
+        units_list: Dimension of fully connected stack outputs.
         activation: Activation to use.
         """
         super(FNN, self).__init__()

@@ -26,7 +26,7 @@ class NeuMF(tf.keras.models.Model):
             item_feature_column: CategoricalColumn to represent item_id.
             user_embedding_dimension: Dimension of user embedding.
             item_embedding_dimension: Dimension of item embedding.
-            units_list: Dimensionality of fully connected stack outputs.
+            units_list: Dimension of fully connected stack outputs.
             activation: Activation to use.
             alpha: Tendency parameter for GMF, thus, 1 - alpha is used for MLP.
         """

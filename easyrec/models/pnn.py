@@ -28,7 +28,7 @@ class PNN(tf.keras.models.Model):
             embedding_dimension: embedding dimension of each field.
             use_inner_product: whether to use IPNN.
             use_outer_product: whether to use OPNN.
-            units_list: Dimensionality of fully connected stack outputs.
+            units_list: Dimension of fully connected stack outputs.
             activation: Activation to use.
         """
         super(PNN, self).__init__()

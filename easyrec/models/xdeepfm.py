@@ -26,7 +26,7 @@ class xDeepFM(tf.keras.models.Model):
             multi_hot_feature_columns: List[CategoricalColumn] encodes multi hot feature fields, such as
                 historical_item_ids.
             k: Dimension of the second-order weights.
-            deep_units_list: Dimensionality of fully connected stack outputs in deep block.
+            deep_units_list: Dimension of fully connected stack outputs in deep block.
             deep_activation: Activation to use in deep block.
             cross_units_list: Number of fields in the cross layer.
         """

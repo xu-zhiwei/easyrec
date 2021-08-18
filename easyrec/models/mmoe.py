@@ -26,10 +26,10 @@ class MMOE(tf.keras.models.Model):
             feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which basically
                 contains all feature fields.
             num_experts: Number of experts.
-            expert_units_list: Dimensionality of fully connected stack outputs in expert dense block.
+            expert_units_list: Dimension of fully connected stack outputs in expert dense block.
             expert_activation: Activation to use in expert dense block.
             num_towers: Number of towers (tasks).
-            tower_units_list: Dimensionality of fully connected stack outputs in tower dense block.
+            tower_units_list: Dimension of fully connected stack outputs in tower dense block.
             tower_activation: Activation to use in tower dense block.
         """
         super(MMOE, self).__init__()

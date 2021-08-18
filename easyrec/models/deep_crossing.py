@@ -23,7 +23,7 @@ class DeepCrossing(tf.keras.models.Model):
             feature_columns: List[FeatureColumn] to directly feed into tf.keras.layers.DenseFeatures, which basically
                 contains all feature fields.
             num_residual_blocks: Number of residual blocks.
-            residual_units_list: Dimensionality of fully connected stack outputs in residual block.
+            residual_units_list: Dimension of fully connected stack outputs in residual block.
             residual_activation: Activation to use in residual block.
         """
         super(DeepCrossing, self).__init__()
