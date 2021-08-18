@@ -47,7 +47,7 @@ df = pd.merge(df, item_df, how='left', on='item_id')
 Then, based on feature columns in Tensorflow 2, you can formally define the format of input for models and obtain the
 dataset generator.
 
-Note: detailed introduction of feature columns is illustrated in Tutorial.
+Note: detailed introduction of feature columns is illustrated in [Tutorial](https://easyrec-python.readthedocs.io/en/latest/tutorials.html#feature-columns).
 
 ```python
 import tensorflow as tf
@@ -213,4 +213,4 @@ print('test_loss: {}, test_auc: {}'.format(test_loss.result().numpy(),
 ```
 
 # High-level APIs
-
+Coming sooooooooon!
