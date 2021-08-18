@@ -9,7 +9,7 @@ in [Github](https://github.com/xu-zhiwei/easyrec/tree/main/examples).
 Here we take [MovieLens 1M Dataset](https://grouplens.org/datasets/movielens/1m/) (short as ml-1m) for dataset and
 Factorization Machine (FM) for model as an example.
 
-## Prepare dataset
+# Prepare dataset
 
 After you have downloaded the dataset, you may clean the data as follows:
 
@@ -119,7 +119,7 @@ validation_dataset = validation_dataset.batch(batch_size)
 test_dataset = test_dataset.batch(batch_size)
 ```
 
-## Low-level APIs
+# Low-level APIs
 Next, train the model according to Low-level APIs (or the High-level APIs mentioned below).
 
 ```python
