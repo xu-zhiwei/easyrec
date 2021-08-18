@@ -1,4 +1,4 @@
-# Quick Run
+# Background of example
 
 *easyrec* provides a number of existing models proposed in recommender system fields. It is extremely easy to use and
 what you only need is to prepare the input of models.
