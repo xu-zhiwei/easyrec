@@ -8,7 +8,7 @@ class DeepCrossing(tf.keras.models.Model):
     """
     Deep Crossing.
     Reference: Ying Shan et al. Deep Crossing: Web-Scale Modeling without Manually Crafted Combinatorial
-        Features. KDD. 2016.
+    Features. KDD. 2016.
     """
 
     def __init__(self,

@@ -9,7 +9,7 @@ class FNN(tf.keras.Model):
     """
     Factorization-machine supported Neural Network (FNN).
     Reference: Weinan Zhang. Deep Learning over Multi-field Categorical Data – A Case Study on User Response
-        Prediction. ECIR. 2016.
+    Prediction. ECIR. 2016.
     """
 
     def __init__(self,
