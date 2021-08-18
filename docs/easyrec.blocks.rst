@@ -1,10 +1,7 @@
-easyrec.blocks package
+easyrec.blocks
 ======================
 
-Submodules
-----------
-
-easyrec.blocks.interaction module
+easyrec.blocks.interaction
 ---------------------------------
 
 .. automodule:: easyrec.blocks.interaction
@@ -12,18 +9,10 @@ easyrec.blocks.interaction module
    :undoc-members:
    :show-inheritance:
 
-easyrec.blocks.nn module
+easyrec.blocks.nn
 ------------------------
 
 .. automodule:: easyrec.blocks.nn
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: easyrec.blocks
    :members:
    :undoc-members:
    :show-inheritance:

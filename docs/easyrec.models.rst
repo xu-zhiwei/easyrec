@@ -1,10 +1,7 @@
-easyrec.models package
+easyrec.models
 ======================
 
-Submodules
-----------
-
-easyrec.models.afm module
+easyrec.models.afm
 -------------------------
 
 .. automodule:: easyrec.models.afm
@@ -12,7 +9,7 @@ easyrec.models.afm module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.autoint module
+easyrec.models.autoint
 -----------------------------
 
 .. automodule:: easyrec.models.autoint
@@ -20,7 +17,7 @@ easyrec.models.autoint module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.dcn module
+easyrec.models.dcn
 -------------------------
 
 .. automodule:: easyrec.models.dcn
@@ -28,7 +25,7 @@ easyrec.models.dcn module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.deep\_crossing module
+easyrec.models.deep\_crossing
 ------------------------------------
 
 .. automodule:: easyrec.models.deep_crossing
@@ -36,7 +33,7 @@ easyrec.models.deep\_crossing module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.deepfm module
+easyrec.models.deepfm
 ----------------------------
 
 .. automodule:: easyrec.models.deepfm
@@ -44,7 +41,7 @@ easyrec.models.deepfm module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.dssm module
+easyrec.models.dssm
 --------------------------
 
 .. automodule:: easyrec.models.dssm
@@ -52,7 +49,7 @@ easyrec.models.dssm module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.ffm module
+easyrec.models.ffm
 -------------------------
 
 .. automodule:: easyrec.models.ffm
@@ -60,7 +57,7 @@ easyrec.models.ffm module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.fm module
+easyrec.models.fm
 ------------------------
 
 .. automodule:: easyrec.models.fm
@@ -68,7 +65,7 @@ easyrec.models.fm module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.fnn module
+easyrec.models.fnn
 -------------------------
 
 .. automodule:: easyrec.models.fnn
@@ -76,7 +73,7 @@ easyrec.models.fnn module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.lr module
+easyrec.models.lr
 ------------------------
 
 .. automodule:: easyrec.models.lr
@@ -84,7 +81,7 @@ easyrec.models.lr module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.mlp module
+easyrec.models.mlp
 -------------------------
 
 .. automodule:: easyrec.models.mlp
@@ -92,7 +89,7 @@ easyrec.models.mlp module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.mmoe module
+easyrec.models.mmoe
 --------------------------
 
 .. automodule:: easyrec.models.mmoe
@@ -100,7 +97,7 @@ easyrec.models.mmoe module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.neumf module
+easyrec.models.neumf
 ---------------------------
 
 .. automodule:: easyrec.models.neumf
@@ -108,7 +105,7 @@ easyrec.models.neumf module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.nfm module
+easyrec.models.nfm
 -------------------------
 
 .. automodule:: easyrec.models.nfm
@@ -116,7 +113,7 @@ easyrec.models.nfm module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.pnn module
+easyrec.models.pnn
 -------------------------
 
 .. automodule:: easyrec.models.pnn
@@ -124,7 +121,7 @@ easyrec.models.pnn module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.wide\_and\_deep module
+easyrec.models.wide\_and\_deep
 -------------------------------------
 
 .. automodule:: easyrec.models.wide_and_deep
@@ -132,18 +129,10 @@ easyrec.models.wide\_and\_deep module
    :undoc-members:
    :show-inheritance:
 
-easyrec.models.xdeepfm module
+easyrec.models.xdeepfm
 -----------------------------
 
 .. automodule:: easyrec.models.xdeepfm
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: easyrec.models
    :members:
    :undoc-members:
    :show-inheritance:

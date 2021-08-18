@@ -26,9 +26,8 @@ Welcome to easyrec's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: API
+   :caption: API Reference
 
-   easyrec.rst
    easyrec.models.rst
    easyrec.blocks.rst
 
