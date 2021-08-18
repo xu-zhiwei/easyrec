@@ -37,8 +37,3 @@ pip install easyrec-python
 ## Getting Started
 
 Please refer to the [documentation](https://easyrec-python.readthedocs.io/en/latest/) for the basic usage of *easyrec*.
-
-## Note
-
-The document is working in progress and will be released very soon! Thank you for your attention.
-
