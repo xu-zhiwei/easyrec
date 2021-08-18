@@ -7,6 +7,7 @@
 This project is released under the [MIT License](https://github.com/xu-zhiwei/easyrec/blob/main/LICENSE).
 
 ## Features
+
 | model | source |
 | ---- | ---- |
 | Logisitic Regression (LR) | |
@@ -28,13 +29,16 @@ This project is released under the [MIT License](https://github.com/xu-zhiwei/ea
 | Automatic Feature Interaction (AutoInt) | AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks. CIKM. 2019. |
 
 ## Installation
+
 ```
 pip install easyrec-python
 ```
 
 ## Getting Started
+
 Please refer to the [documentation](https://easyrec-python.readthedocs.io/en/latest/) for the basic usage of *easyrec*.
 
 ## Note
+
 The document is working in progress and will be released very soon! Thank you for your attention.
 
