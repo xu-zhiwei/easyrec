@@ -48,7 +48,7 @@ class xDeepFM(tf.keras.models.Model):
         self.deep = blocks.DenseBlock(deep_units_list, deep_activation)
         cross_units_list = [self.num_fields, *cross_units_list]
         self.cross = [tf.Variable(tf.random.normal((self.num_fields, cross_units_list[i], cross_units_list[i + 1])))
-                      for i in range(len(cross_units_list) - 1)]    # [num_fields, Hk, Hk+1]
+                      for i in range(len(cross_units_list) - 1)]  # [num_fields, Hk, Hk+1]
         self.score = Dense(1, activation='sigmoid')
 
     def call(self, inputs, training=None, mask=None):
@@ -66,15 +66,14 @@ class xDeepFM(tf.keras.models.Model):
                 [
                     tf.matmul(
                         tf.expand_dims(x0[:, :, i], 2), tf.expand_dims(x[:, :, i], 1)
-                    )   # [batch, num_fields, Hk]
+                    )  # [batch, num_fields, Hk]
                     for i in range(x0.shape[2])
                 ], axis=1
-            )           # [batch, k, num_fields, Hk]
-            x = tf.expand_dims(x, -1) * w           # [batch, k, num_fields, Hk, Hk+1]
-            x = tf.reduce_sum(x, axis=(2, 3))       # [batch, k, Hk+1]
-            x = tf.transpose(x, [0, 2, 1])          # [batch, Hk+1, k]
+            )  # [batch, k, num_fields, Hk]
+            x = tf.expand_dims(x, -1) * w  # [batch, k, num_fields, Hk, Hk+1]
+            x = tf.reduce_sum(x, axis=(2, 3))  # [batch, k, Hk+1]
+            x = tf.transpose(x, [0, 2, 1])  # [batch, Hk+1, k]
             cross.append(tf.reduce_sum(x, axis=2))  # [batch, Hk+1]
         cross = tf.concat(cross, axis=1)
 
         return self.score(tf.concat((wide, deep, cross), axis=1))
-

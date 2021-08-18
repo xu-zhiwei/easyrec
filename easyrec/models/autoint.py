@@ -1,7 +1,7 @@
 import tensorflow as tf
-
-from tensorflow.keras.layers import DenseFeatures, Flatten, Dense
 from tensorflow.keras.activations import relu
+from tensorflow.keras.layers import DenseFeatures, Flatten, Dense
+
 from easyrec import blocks
 
 
@@ -10,6 +10,7 @@ class AutoInt(tf.keras.models.Model):
     Automatic Feature Interaction (AutoInt).
     Reference: AutoInt: Automatic Feature Interaction Learning via Self-Attentive Neural Networks. CIKM. 2019.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  multi_hot_feature_columns,
@@ -60,4 +61,3 @@ class AutoInt(tf.keras.models.Model):
         x = relu(x + self.multi_head_self_attention(x))
         x = self.flatten(x)
         return self.score(x)
-

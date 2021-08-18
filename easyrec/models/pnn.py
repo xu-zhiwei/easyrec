@@ -9,6 +9,7 @@ class PNN(tf.keras.models.Model):
     Product-based Neural Network (PNN).
     Reference: Yanru Qu et al. Product-based Neural Networks for User Response Prediction. ICDM. 2016.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  multi_hot_feature_columns,

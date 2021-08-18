@@ -10,6 +10,7 @@ class MMOE(tf.keras.models.Model):
     Reference: Jiaqi Ma et al. Modeling Task Relationships in Multi-task Learning with Multi-gate
         Mixture-of-Experts. KDD. 2018.
     """
+
     def __init__(self,
                  feature_columns,
                  num_experts=3,

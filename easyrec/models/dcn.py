@@ -9,6 +9,7 @@ class DCN(tf.keras.models.Model):
     Deep & Cross Network (DCN).
     Reference: Ruoxi Wang et al. Deep & Cross Network for ad Click Predictions. ADKDD. 2017.
     """
+
     def __init__(self,
                  one_hot_feature_columns,
                  multi_hot_feature_columns,
