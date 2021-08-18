@@ -1,0 +1,17 @@
+# AFM
+# AutoInt
+# DCN
+# DSSM
+# DeepCrossing
+# DeepFM
+# FFM
+# FM
+# FNN
+# LR
+# MLP
+# MMOE
+# NFM
+# NeuMF
+# PNN
+# WideAndDeep
+# xDeepFM
