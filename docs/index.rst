@@ -28,7 +28,9 @@ Welcome to easyrec's documentation!
    :maxdepth: 2
    :caption: API
 
-   api.md
+   easyrec.rst
+   easyrec.models.rst
+   easyrec.blocks.rst
 
 
 
