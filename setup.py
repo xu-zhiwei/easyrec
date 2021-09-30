@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='easyrec-python',
-    version='0.0.1',
+    version='0.0.2',
     description='Easy-to-use implementations of well-known recommender system algorithms based on Python Tensorflow 2.',
     long_description=long_description,
     keywords='Recommender System; CTR Estimation',
